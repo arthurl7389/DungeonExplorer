@@ -26,6 +26,8 @@
 
 #include <sextant/sprite.h>
 
+#include <Applications/DungeonExplorer/DungeonExplorer.h>
+
 
 extern char __e_kernel,__b_kernel, __b_data, __e_data,  __b_stack, __e_load ;
 int i;
@@ -87,7 +89,9 @@ void demo_bochs_32() {
 
 extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	Ecran ecran;
+	Clavier clavier;
 	Timer timer;
+	DungeonExplorer game;
 
 	idt_setup();
 	irq_setup();
@@ -111,14 +115,16 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	sched_subsystem_setup();
 
 	irq_set_routine(IRQ_TIMER, sched_clk);
-
+	
 	// initialize pci bus to detect GPU address
 	checkBus(0);
 
+	game.init(&ecran,&clavier);
+	game.start();
 
 	// demo_vga();
 
-	demo_bochs_8();
+	//demo_bochs_8();
 
 	// demo_bochs_32();
 }

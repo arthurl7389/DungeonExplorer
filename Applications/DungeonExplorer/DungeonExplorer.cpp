@@ -8,5 +8,5 @@ void DungeonExplorer::init(Ecran* e,Clavier* c) {
 
 
 void DungeonExplorer::start() {
-	
-	}
+    ecran->afficherMot("Bienvenue dans Dungeon Explorer !");
+}
