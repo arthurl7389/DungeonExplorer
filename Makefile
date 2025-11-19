@@ -82,13 +82,13 @@ run: $(KERNEL_OBJ)
 	$(QEMU) -display curses -net nic,model=ne2k_isa -net user,tftp=./build/boot -cdrom ./build/boot/grub.iso
 
 run_gui: $(KERNEL_OBJ)
-	$(QEMU) -net nic,model=ne2k_isa -net user,tftp=./build/boot -cdrom ./build/boot/grub.iso
+	$(QEMU) -net nic,model=ne2k_isa -net user,tftp=./build/boot -cdrom ./build/boot/grub.iso -monitor stdio
 
 debug: $(KERNEL_OBJ)
 	$(QEMU) -display curses -S -s  -net nic,model=ne2k_isa -net user,tftp=./build/boot -cdrom ./build/boot/grub.iso
 
 debug_gui: $(KERNEL_OBJ)
-	$(QEMU) -S -s  -net nic,model=ne2k_isa -net user,tftp=./build/boot -cdrom ./build/boot/grub.iso
+	$(QEMU) -S -s  -net nic,model=ne2k_isa -net user,tftp=./build/boot -cdrom ./build/boot/grub.iso -monitor stdio
 
 show:
 	@echo "objects:$(OBJECTS)"
