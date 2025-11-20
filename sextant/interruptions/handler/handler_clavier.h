@@ -1,7 +1,7 @@
 /*
  * handler_clavier.h
  *
- *  Created on: 8 août 2008
+ *  Created on: 8 aoï¿½t 2008
  *      Author: jmenaud
  */
 
