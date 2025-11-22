@@ -43,7 +43,7 @@ void demo_vga() {
 	while(1) {
 		clear_vga_screen(0); // put the color 0 on each pixel
 		plot_square(offset, 50, 25, 4); // plot a square of 25 width at 50,50 of color 4
-		draw_sprite(sprite_door_data, 32, 32, 100,100); // draw the 32x32 sprite at 100,100
+		draw_sprite(sprite_data, 64, 64, 100,100); // draw the 64x64 sprite at 100,100
 		offset = (offset + 1) % 640;
 	}
 }
@@ -138,12 +138,12 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	// initialize pci bus to detect GPU address
 	checkBus(0);
 
-	game.init(&ecran,&clavier);
-	game.start();
+	//game.init(&ecran,&clavier);
+	//game.start();
 
-	// demo_vga();
+	//demo_vga();
 
-	//demo_bochs_8();
+	demo_bochs_8();
 
-	// demo_bochs_32();
+	//demo_bochs_32();
 }
