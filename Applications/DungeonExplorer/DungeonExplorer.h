@@ -2,6 +2,7 @@
 #define DUNGEONEXPLORER_H
 
 #include <drivers/Clavier.h>
+#include <drivers/EcranBochs.h>
 
 /**
  * @file DungeonExplorer.h
@@ -13,9 +14,15 @@
 
 class DungeonExplorer {
 	Clavier *clavier;
-	Ecran *ecran;
+	EcranBochs *ecran;
+	ui16_t WIDTH;
+	ui16_t HEIGHT;
+	const char SPEED = 1;
 public:
 	void start();
-	void init(Ecran*,Clavier*);
+	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
+	void player1_action(int,int);
+	void player2_action(int,int);
+	void mobs_action();
 };
 #endif
