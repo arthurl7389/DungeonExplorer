@@ -127,8 +127,6 @@ void demo_bochs_32() {
 
 extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	Ecran ecran;
-	ui16_t WIDTH = 640, HEIGHT = 400;
-    EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
 	Clavier clavier;
 	Timer timer;
 	DungeonExplorer game;
@@ -159,11 +157,18 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	// initialize pci bus to detect GPU address
 	checkBus(0);
 
+	// L'écran qu'on va vraiment utiliser:
+	ui16_t WIDTH = 640, HEIGHT = 400;
+    EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
+	vga.init();
+    vga.clear(0);
+    // only usefull in 4 or 8 bits modes
+    vga.set_palette(palette_vga);
+    vga.plot_palette(0, 0, 25);
+
 
 	//demo_vga();
-
 	//demo_bochs_8();
-
 	//demo_bochs_32();
 
 	//test : note : il vaut mieux mettre l'écran boch dans le main parce qu'on veut qu'un écran

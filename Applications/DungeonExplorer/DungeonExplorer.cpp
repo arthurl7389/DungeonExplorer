@@ -7,11 +7,6 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t WIDTH,ui16_t HEIGHT
 	clavier=c;
 	WIDTH=WIDTH;
 	HEIGHT=HEIGHT;
-	ecran->init();
-    ecran->clear(0);
-    // only usefull in 4 or 8 bits modes
-    ecran->set_palette(palette_vga);
-    vga->plot_palette(0, 0, 25);
 }
 
 // 1 : un thread par mov joueur, un pour l'affichage du monde
