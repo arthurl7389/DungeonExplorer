@@ -43,7 +43,7 @@ void demo_vga() {
 	while(1) {
 		clear_vga_screen(0); // put the color 0 on each pixel
 		plot_square(offset, 50, 25, 4); // plot a square of 25 width at 50,50 of color 4
-		draw_sprite(sprite_data, 64, 64, 100,100); // draw the 64x64 sprite at 100,100
+		draw_sprite(sprite_data_player1, 64, 64, 100,100); // draw the 64x64 sprite at 100,100
 		offset = (offset + 1) % 640;
 	}
 }
@@ -82,7 +82,7 @@ void demo_bochs_8() {
         
         vga.clear(1);
         vga.plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, x, y);
-		vga.plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, x+100, y)
+		vga.plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, x+100, y);
         vga.swapBuffer(); // call this after you finish drawing your frame to display it, it avoids screen tearing
     }
 }
