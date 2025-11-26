@@ -51,7 +51,7 @@ void demo_vga() {
 void demo_bochs_8() {
     ui16_t WIDTH = 640, HEIGHT = 400;
     EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
-    const char SPEED = 2;
+    const char SPEED = 1;
     Clavier c;
 
     vga.init();
@@ -62,6 +62,7 @@ void demo_bochs_8() {
     vga.plot_palette(0, 0, 25);
 
     int x = 0, y = 0;
+	int x2 = 100, y2 = 0;
 
     while (true) {
 
@@ -79,10 +80,26 @@ void demo_bochs_8() {
         if (c.is_pressed(AZERTY::K_D)) {
             x = (x + SPEED) % WIDTH;
         }
+
+		// and player 2 
+		if (c.is_pressed(AZERTY::K_O)) {
+            y2 -= SPEED;
+            if (y2 < 0) y2 += HEIGHT;
+        }
+        if (c.is_pressed(AZERTY::K_K)) {
+            x2 -= SPEED;
+            if (x2 < 0) x2 += WIDTH;
+        }
+        if (c.is_pressed(AZERTY::K_L)) {
+            y2 = (y2 + SPEED) % HEIGHT;
+        }
+        if (c.is_pressed(AZERTY::K_M)) {
+            x2 = (x2 + SPEED) % WIDTH;
+        }
         
         vga.clear(1);
         vga.plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, x, y);
-		vga.plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, x+100, y);
+		vga.plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, x2, y2);
         vga.swapBuffer(); // call this after you finish drawing your frame to display it, it avoids screen tearing
     }
 }
