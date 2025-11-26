@@ -81,7 +81,8 @@ void demo_bochs_8() {
         }
         
         vga.clear(1);
-        vga.plot_sprite(sprite_data, SPRITE_WIDTH, SPRITE_HEIGHT, x, y);
+        vga.plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, x, y);
+		vga.plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, x+100, y)
         vga.swapBuffer(); // call this after you finish drawing your frame to display it, it avoids screen tearing
     }
 }
