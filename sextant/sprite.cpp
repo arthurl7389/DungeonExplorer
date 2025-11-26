@@ -259,7 +259,7 @@ unsigned char palette_vga[256][3] = {
     {63, 63, 37},
 };
 
-unsigned char sprite_data[SPRITE_WIDTH*SPRITE_HEIGHT] = {
+unsigned char sprite_data_player1[SPRITE_WIDTH*SPRITE_HEIGHT] = {
   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
