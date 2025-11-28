@@ -54,6 +54,11 @@ void demo_bochs_8() {
     const char SPEED = 1;
     Clavier c;
 
+	AZERTY::scancodes controls[2][4] = {
+		{AZERTY::K_Z, AZERTY::K_Q, AZERTY::K_S, AZERTY::K_D}, // Player 1
+		{AZERTY::K_O, AZERTY::K_K, AZERTY::K_L, AZERTY::K_M}  // Player 2
+	};
+
     vga.init();
     vga.clear(0);
 
@@ -66,7 +71,7 @@ void demo_bochs_8() {
 
     while (true) {
 
-        if (c.is_pressed(AZERTY::K_Z)) {
+        if (c.is_pressed(controls[0][0])) {
             y -= SPEED;
             if (y < 0) y += HEIGHT;
         }

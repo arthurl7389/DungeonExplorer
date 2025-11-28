@@ -1,27 +1,27 @@
 #include "Player.h"
 
-void Player::init(Clavier* c, ui16_t w, ui16_t h, int id) {
+void Player::init(Clavier* c, ui16_t w, ui16_t h, int pId) {
     x = 0;
     y = 0;
     clavier = c;
     WIDTH = w;
     HEIGHT = h;
-    id = id;
+    player_id = pId;
 }
 
-void Player::action() {
-    if (clavier->is_pressed(controls[id][0])) {
+void Player::action(bool pressed[4]) {
+    if (pressed[0]) {
         y -= SPEED;
         if (y < 0) y += HEIGHT;
     }
-    if (clavier->is_pressed(controls[id][1])) {
+    if (pressed[1]) {
         x -= SPEED;
         if (x < 0) x += WIDTH;
     }
-    if (clavier->is_pressed(controls[id][2])) {
+    if (pressed[2]) {
         y = (y + SPEED) % HEIGHT;
     }
-    if (clavier->is_pressed(controls[id][3])) {
+    if (pressed[3]) {
         x = (x + SPEED) % WIDTH;
     }
 }
