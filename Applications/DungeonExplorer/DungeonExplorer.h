@@ -3,6 +3,7 @@
 
 #include <drivers/Clavier.h>
 #include <drivers/EcranBochs.h>
+#include <sextant/sprite.h>
 #include "Player.h"
 #include "Mob.h"
 
@@ -22,6 +23,8 @@ class DungeonExplorer {
 	const char SPEED = 1;
 	Player player1;
 	Player player2;
+	int mobCount = 2;
+	Mob mobs[2];
 public:
 	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
 	void start();
