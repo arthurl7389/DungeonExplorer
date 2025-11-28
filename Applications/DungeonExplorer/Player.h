@@ -12,16 +12,15 @@
 
 
 class Player {
-    //AZERTY::scancodes controls[2][4];
     int x;
     int y;
     Clavier* clavier;
     ui16_t WIDTH;
 	ui16_t HEIGHT;
-	const char SPEED = 1;
+	char SPEED;
     int player_id;
 public:
-    void init(int, int, Clavier*, ui16_t, ui16_t, int);
+    void init(int, int, Clavier*, ui16_t, ui16_t, char, int);
     void action(bool pressed[4]);
     int getX() { return x; }
     int getY() { return y; }

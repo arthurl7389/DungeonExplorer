@@ -1,11 +1,12 @@
 #include "Player.h"
 
-void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, int pId) {
+void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId) {
     this->x = x;
     this->y = y;
     clavier = c;
     WIDTH = w;
     HEIGHT = h;
+    SPEED = 2*sp;
     player_id = pId;
 }
 

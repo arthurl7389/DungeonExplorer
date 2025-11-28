@@ -4,6 +4,7 @@
 #include <drivers/Clavier.h>
 #include <drivers/EcranBochs.h>
 #include "Player.h"
+#include "Mob.h"
 
 /**
  * @file DungeonExplorer.h
