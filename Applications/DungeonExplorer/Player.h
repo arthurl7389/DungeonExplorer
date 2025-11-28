@@ -21,7 +21,7 @@ class Player {
 	const char SPEED = 1;
     int player_id;
 public:
-    void init(Clavier*, ui16_t, ui16_t, int);
+    void init(int, int, Clavier*, ui16_t, ui16_t, int);
     void action(bool pressed[4]);
     int getX() { return x; }
     int getY() { return y; }

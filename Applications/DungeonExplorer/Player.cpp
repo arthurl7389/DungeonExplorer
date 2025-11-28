@@ -1,8 +1,8 @@
 #include "Player.h"
 
-void Player::init(Clavier* c, ui16_t w, ui16_t h, int pId) {
-    x = 0;
-    y = 0;
+void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, int pId) {
+    this->x = x;
+    this->y = y;
     clavier = c;
     WIDTH = w;
     HEIGHT = h;
