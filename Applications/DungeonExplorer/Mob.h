@@ -2,7 +2,8 @@
 #define MOB_H
 
 #include <sextant/types.h>
-#include "Player.h"
+
+class Player;
 
 /**
  * @file Mob.h
@@ -14,6 +15,7 @@
 class Mob {
     int x;
     int y;
+    int pv = 10;
     ui16_t WIDTH;
 	ui16_t HEIGHT;
 	char SPEED;
@@ -22,10 +24,13 @@ class Mob {
     Player* player2;
 public:
     void init(int, int, ui16_t, ui16_t, char, Player*, Player*);
-    Player nearestPlayer();
+    Player* nearestPlayer();
     int distanceSquareToPlayer(Player*);
     void action();
+    void attacked(int);
     int getX() { return x; }
     int getY() { return y; }
+    int getPV();
+    void setPV(int);
 };
 #endif

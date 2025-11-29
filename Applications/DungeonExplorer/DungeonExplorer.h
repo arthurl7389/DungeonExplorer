@@ -24,7 +24,9 @@ class DungeonExplorer {
 	Player player1;
 	Player player2;
 	int mobCount = 2;
-	Mob mobs[2];
+	Mob mob1;
+	Mob mob2;
+	Mob* mobs[2] = { &mob1, &mob2};
 public:
 	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
 	void start();

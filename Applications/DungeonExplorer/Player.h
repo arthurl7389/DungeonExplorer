@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <drivers/Clavier.h>
+class Mob;
 
 
 /**
@@ -14,15 +15,20 @@
 class Player {
     int x;
     int y;
+    int attack = 5;
     Clavier* clavier;
     ui16_t WIDTH;
 	ui16_t HEIGHT;
 	char SPEED;
     int player_id;
+    int mobCount;
+    Mob** mobs;
 public:
-    void init(int, int, Clavier*, ui16_t, ui16_t, char, int);
-    void action(bool pressed[4]);
+    void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**);
+    void action(bool pressed[5]);
     int getX() { return x; }
     int getY() { return y; }
+    int getAttack();
+    void setAttack(int);
 };
 #endif
