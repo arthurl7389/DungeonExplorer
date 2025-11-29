@@ -38,7 +38,9 @@ void DungeonExplorer::start() {
         player2.action(pressed2);
         
         for (int i = 0; i < mobCount; i++) {
-            mobs[i]->action();
+            if (mobs[i]->getPV() > 0) {
+                mobs[i]->action();
+            }
         }
 
 		ecran->clear(1);
