@@ -9,5 +9,6 @@ extern unsigned char palette_vga[256][3];
 extern unsigned char sprite_data_player1[SPRITE_WIDTH*SPRITE_HEIGHT];
 extern unsigned char sprite_data_player2[SPRITE_WIDTH*SPRITE_HEIGHT];
 extern unsigned char sprite_data_skeleton[SPRITE_WIDTH*SPRITE_HEIGHT];
+extern unsigned char gameover[320*200];
 
 #endif

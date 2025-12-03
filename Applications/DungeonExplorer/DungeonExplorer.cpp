@@ -6,10 +6,10 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 	WIDTH=w;
 	HEIGHT=h;
     mobCount = 2;
-    player1.init(200, 150, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2);
-    player2.init(400, 150, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1);
-    mob1.init(350, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
-    mob2.init(450, 250, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
+    player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2);
+    player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1);
+    mob1.init(450, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
+    mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
     mobs[0] = &mob1;
     mobs[1] = &mob2;
 }
@@ -18,7 +18,7 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 // 2 : on modifie le monde dynamiquement, localement
 // commence simple, après rend les choses plus compliqué, 
 void DungeonExplorer::start() {
-    while (true) {
+    while (player1.isAlive() || player2.isAlive()) {
         bool pressed1[5] = {
             clavier->is_pressed(AZERTY::K_Z),
             clavier->is_pressed(AZERTY::K_Q),
@@ -61,4 +61,7 @@ void DungeonExplorer::start() {
         }
 		ecran->swapBuffer();
 	}
+    ecran->clear(1);
+    ecran->plot_sprite(gameover, 320, 200, 160, 100);
+    ecran->swapBuffer();
 }
