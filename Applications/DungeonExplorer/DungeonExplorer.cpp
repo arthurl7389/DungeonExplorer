@@ -6,8 +6,8 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 	WIDTH=w;
 	HEIGHT=h;
     mobCount = 2;
-    player1.init(200, 150, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs);
-    player2.init(400, 150, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs);
+    player1.init(200, 150, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2);
+    player2.init(400, 150, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1);
     mob1.init(350, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
     mob2.init(450, 250, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
     mobs[0] = &mob1;

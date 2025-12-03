@@ -19,16 +19,16 @@ void Mob::action() {
     if (distanceSquareToPlayer(nearest) < 2500) {
         return; 
     }
-    if (nearest->getX() < x && canGoDown()) {
+    if (nearest->getX() < x && canGoLeft()) {
         x -= SPEED;
         if (x < 0) x += WIDTH;
-    } else if (nearest->getX() > x && canGoUp()) {
+    } else if (nearest->getX() > x && canGoRight()) {
         x = (x + SPEED) % WIDTH;
     }
-    if (nearest->getY() < y && canGoLeft()) {
+    if (nearest->getY() < y && canGoDown()) {
         y -= SPEED;
         if (y < 0) y += HEIGHT;
-    } else if (nearest->getY() > y && canGoRight()) {
+    } else if (nearest->getY() > y && canGoUp()) {
         y = (y + SPEED) % HEIGHT;
     }
 }
@@ -47,7 +47,7 @@ int Mob::distanceSquareToPlayer(Player* player) {
     return (player->getX() - x) * (player->getX() - x) + (player->getY() - y) * (player->getY() - y);
 }
 
-bool Mob::canGoUp() {
+bool Mob::canGoRight() {
     for (int i=0; i<mobCount; i++) {
         if (mobs[i] != this && mobs[i]->getX() - x > 0 && mobs[i]->getX() - x < 50) {
             if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2500) {
@@ -58,7 +58,7 @@ bool Mob::canGoUp() {
     return true;
 }
 
-bool Mob::canGoDown() {
+bool Mob::canGoLeft() {
     for (int i=0; i<mobCount; i++) {
         if (mobs[i] != this && mobs[i]->getX() - x < 0 && mobs[i]->getX() - x > -50) {
             if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2500) {
@@ -69,7 +69,7 @@ bool Mob::canGoDown() {
     return true;
 }
 
-bool Mob::canGoRight() {
+bool Mob::canGoUp() {
     for (int i=0; i<mobCount; i++) {
         if (mobs[i] != this && mobs[i]->getY() - y > 0 && mobs[i]->getY() - y < 50) {
             if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2500) {
@@ -80,7 +80,7 @@ bool Mob::canGoRight() {
     return true;
 }
 
-bool Mob::canGoLeft() {
+bool Mob::canGoDown() {
     for (int i=0; i<mobCount; i++) {
         if (mobs[i] != this && mobs[i]->getY() - y < 0 && mobs[i]->getY() - y > -50) {
             if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2500) {

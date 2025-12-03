@@ -23,11 +23,16 @@ class Player {
     int player_id;
     int mobCount;
     Mob** mobs;
+    Player* ally;
 public:
-    void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**);
+    void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**, Player*);
     void action(bool pressed[5]);
     int getX() { return x; }
     int getY() { return y; }
+    bool canGoUp();
+    bool canGoDown();
+    bool canGoLeft();
+    bool canGoRight();
     int getAttack();
     void setAttack(int);
 };
