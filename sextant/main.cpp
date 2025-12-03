@@ -162,6 +162,10 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	// initialize pci bus to detect GPU address
 	checkBus(0);
 
+	//demo_vga();
+	//demo_bochs_8();
+	//demo_bochs_32();
+
 	// L'écran qu'on va vraiment utiliser:
 	ui16_t WIDTH = 640, HEIGHT = 400;
     EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
@@ -171,13 +175,15 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
     vga.set_palette(palette_vga);
     vga.plot_palette(0, 0, 25);
 
+	// Brouillon : 
+	//char tab[1024];
+	//Cons conso(&sem1,tab,&ecran);
+	//Prod produ(&sem1,tab,&ecran);
+	//conso.start();
+	//produ.start();
+	//ok done
 
-	//demo_vga();
-	//demo_bochs_8();
-	//demo_bochs_32();
-
-	//test : note : il vaut mieux mettre l'écran boch dans le main parce qu'on veut qu'un écran
-	// et on fait tout avec!
+	//on met l'écran boch dans le main parce qu'on veut qu'un écran et on fait tout avec.
 	game.init(&vga,&clavier,WIDTH,HEIGHT);
 	game.start();
 }

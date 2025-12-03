@@ -28,13 +28,15 @@ void EcranBochs::init() {
     ecrireRegistre(VBE_INDEX::YRES, height);
     ecrireRegistre(VBE_INDEX::BPP, mode);
 
+    // enable screen
+    ecrireRegistre(VBE_INDEX::ENABLE, VBE_DISPI_ENABLED | VBE_DISPI_LFB_ENABLED);
+
     // set virtual width for double buffering
     ecrireRegistre(VBE_INDEX::VIRT_WIDTH, width);
     ecrireRegistre(VBE_INDEX::X_OFFSET, 0);
     ecrireRegistre(VBE_INDEX::Y_OFFSET, 0);
 
-    // enable screen
-    ecrireRegistre(VBE_INDEX::ENABLE, VBE_DISPI_ENABLED | VBE_DISPI_LFB_ENABLED);
+    
 }
 
 void EcranBochs::swapBuffer() {
