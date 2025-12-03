@@ -7,12 +7,13 @@ void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId,
     clavier = c;
     WIDTH = w;
     HEIGHT = h;
-    SPEED = 2*sp;
+    SPEED = 3*sp;
     player_id = pId;
     mobCount = mc;
     mobs = m;
     ally = p;
     this->setAttack(6);
+    alive = true;
 }
 
 void Player::action(bool pressed[5]) {

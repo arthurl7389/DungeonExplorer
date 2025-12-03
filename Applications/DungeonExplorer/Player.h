@@ -24,6 +24,7 @@ class Player {
     int mobCount;
     Mob** mobs;
     Player* ally;
+    bool alive = true;
 public:
     void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**, Player*);
     void action(bool pressed[5]);
@@ -35,5 +36,7 @@ public:
     bool canGoRight();
     int getAttack();
     void setAttack(int);
+    bool isAlive() { return alive; }
+    void kill() { alive = false; }
 };
 #endif

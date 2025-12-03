@@ -34,8 +34,12 @@ void DungeonExplorer::start() {
             clavier->is_pressed(AZERTY::K_M),
             clavier->is_pressed(AZERTY::K_N)
         };
-        player1.action(pressed1);
-        player2.action(pressed2);
+        if (player1.isAlive()) {
+            player1.action(pressed1);
+        }
+        if (player2.isAlive()) {
+            player2.action(pressed2);
+        }
         
         for (int i = 0; i < mobCount; i++) {
             if (mobs[i]->getPV() > 0) {
@@ -44,8 +48,12 @@ void DungeonExplorer::start() {
         }
 
 		ecran->clear(1);
-		ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX(), player1.getY());
-		ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX(), player2.getY());
+        if (player1.isAlive()) {
+    		ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX(), player1.getY());
+        }    
+        if (player2.isAlive()) {
+    		ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX(), player2.getY());
+        }
         for (int i = 0; i < mobCount; i++) {
             if (mobs[i]->getPV() > 0) {
                 ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX(), mobs[i]->getY());
