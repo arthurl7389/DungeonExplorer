@@ -33,7 +33,7 @@ void Player::action(bool pressed[5]) {
     }
     if (pressed[4]) {
         for (int i=0; i<mobCount; i++) {
-            if (mobs[i]->distanceSquareToPlayer(this) < 3600) {
+            if (mobs[i]->distanceSquareToPlayer(this) < 4900) {
                 mobs[i]->attacked(attack);
             }
         }

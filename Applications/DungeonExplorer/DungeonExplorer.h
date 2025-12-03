@@ -30,5 +30,6 @@ class DungeonExplorer {
 public:
 	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
 	void start();
+	int mobs_alive();
 };
 #endif

@@ -18,7 +18,7 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 // 2 : on modifie le monde dynamiquement, localement
 // commence simple, après rend les choses plus compliqué, 
 void DungeonExplorer::start() {
-    while (player1.isAlive() || player2.isAlive()) {
+    while ((player1.isAlive() || player2.isAlive()) && mobs_alive() != 0 ) {
         bool pressed1[5] = {
             clavier->is_pressed(AZERTY::K_Z),
             clavier->is_pressed(AZERTY::K_Q),
@@ -62,6 +62,20 @@ void DungeonExplorer::start() {
 		ecran->swapBuffer();
 	}
     ecran->clear(1);
-    ecran->plot_sprite(gameover, 320, 200, 160, 100);
+    if (player1.isAlive() || player2.isAlive()) {
+        ecran->plot_sprite(victoire, 194, 40, 223, 180);
+    } else {
+        ecran->plot_sprite(gameover, 289, 40, 175, 180);
+    }
     ecran->swapBuffer();
+}
+
+int DungeonExplorer::mobs_alive() {
+    int nb_alive = 0;
+    for (int i=0; i<mobCount; i++) {
+        if (mobs[i]->getPV() != 0) {
+            nb_alive += 1;
+        }
+    }
+    return nb_alive;
 }
