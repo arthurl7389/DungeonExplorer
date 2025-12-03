@@ -1,7 +1,7 @@
 #include "Mob.h"
 #include "Player.h"
 
-void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2) {
+void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2, int mc, Mob** m) {
     this->x = x;
     this->y = y;
     WIDTH = w;
@@ -9,6 +9,8 @@ void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2
     SPEED = sp;
     player1 = p1;
     player2 = p2;
+    mobCount = mc;
+    mobs = m;
     this->setPV(100);
 }
 
@@ -17,16 +19,16 @@ void Mob::action() {
     if (distanceSquareToPlayer(nearest) < 2500) {
         return; 
     }
-    if (nearest->getX() < x) {
+    if (nearest->getX() < x && canGoDown()) {
         x -= SPEED;
         if (x < 0) x += WIDTH;
-    } else if (nearest->getX() > x) {
+    } else if (nearest->getX() > x && canGoUp()) {
         x = (x + SPEED) % WIDTH;
     }
-    if (nearest->getY() < y) {
+    if (nearest->getY() < y && canGoLeft()) {
         y -= SPEED;
         if (y < 0) y += HEIGHT;
-    } else if (nearest->getY() > y) {
+    } else if (nearest->getY() > y && canGoRight()) {
         y = (y + SPEED) % HEIGHT;
     }
 }
@@ -43,6 +45,50 @@ Player* Mob::nearestPlayer() {
 
 int Mob::distanceSquareToPlayer(Player* player) {
     return (player->getX() - x) * (player->getX() - x) + (player->getY() - y) * (player->getY() - y);
+}
+
+bool Mob::canGoUp() {
+    for (int i=0; i<mobCount; i++) {
+        if (mobs[i] != this && mobs[i]->getX() - x > 0 && mobs[i]->getX() - x < 50) {
+            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2500) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Mob::canGoDown() {
+    for (int i=0; i<mobCount; i++) {
+        if (mobs[i] != this && mobs[i]->getX() - x < 0 && mobs[i]->getX() - x > -50) {
+            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2500) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Mob::canGoRight() {
+    for (int i=0; i<mobCount; i++) {
+        if (mobs[i] != this && mobs[i]->getY() - y > 0 && mobs[i]->getY() - y < 50) {
+            if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2500) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Mob::canGoLeft() {
+    for (int i=0; i<mobCount; i++) {
+        if (mobs[i] != this && mobs[i]->getY() - y < 0 && mobs[i]->getY() - y > -50) {
+            if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2500) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 void Mob::attacked(int damage) {

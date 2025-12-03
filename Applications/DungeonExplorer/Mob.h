@@ -22,10 +22,17 @@ class Mob {
     int player_id;
     Player* player1;
     Player* player2;
+    int mobCount;
+    Mob** mobs;
 public:
-    void init(int, int, ui16_t, ui16_t, char, Player*, Player*);
+    void init(int, int, ui16_t, ui16_t, char, Player*, Player*, int, Mob**);
     Player* nearestPlayer();
     int distanceSquareToPlayer(Player*);
+    bool canGoUp();
+    bool canGoDown();
+    bool canGoRight();
+    bool canGoLeft();
+    bool canMoveY();
     void action();
     void attacked(int);
     int getX() { return x; }
