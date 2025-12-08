@@ -27,7 +27,10 @@
 #include <sextant/sprite.h>
 
 #include <Applications/DungeonExplorer/DungeonExplorer.h>
+#include <sextant/Synchronisation/Mutex/Mutex.h>
 
+#include <Applications/DungeonExplorer/Thread1Test.h>
+#include <Applications/DungeonExplorer/Thread2Test.h>
 
 extern char __e_kernel,__b_kernel, __b_data, __e_data,  __b_stack, __e_load ;
 int i;
@@ -130,6 +133,46 @@ void demo_bochs_32() {
 	}
 }
 
+void test_thread_mutex(){
+	ui16_t WIDTH = 640, HEIGHT = 400;
+    EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
+    //const char SPEED = 1;
+    Clavier c;
+    vga.init();
+    vga.clear(0);
+    vga.set_palette(palette_vga);
+    vga.plot_palette(0, 0, 25);
+    int x = 0, y = 0;
+	Mutex mutex = Mutex();
+	Thread1Test threadAffichage;
+	Thread2Test threadPosition;
+	threadAffichage.init(&mutex,&vga,&c,WIDTH,HEIGHT,&x,&y);
+	threadPosition.init(&mutex,&vga,&c,WIDTH,HEIGHT,&x,&y);
+	while (true){
+		/*
+		if (c.is_pressed(AZERTY::K_Z)) {
+            y -= SPEED;
+            if (y < 0) y += HEIGHT;
+        }
+        if (c.is_pressed(AZERTY::K_Q)) {
+            x -= SPEED;
+            if (x < 0) x += WIDTH;
+        }
+        if (c.is_pressed(AZERTY::K_S)) {
+            y = (y + SPEED) % HEIGHT;
+        }
+        if (c.is_pressed(AZERTY::K_D)) {
+            x = (x + SPEED) % WIDTH;
+        }
+		vga.clear(1);
+        vga.plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, x, y);
+		vga.swapBuffer();
+		*/
+		threadPosition.run();
+		threadAffichage.run();
+	}
+}
+
 extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	Ecran ecran;
 	Clavier clavier;
@@ -166,6 +209,10 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	//demo_bochs_8();
 	//demo_bochs_32();
 
+	//Test threads: 
+	test_thread_mutex();
+
+	/*
 	// L'écran qu'on va vraiment utiliser:
 	ui16_t WIDTH = 640, HEIGHT = 400;
     EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
@@ -186,4 +233,5 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	//on met l'écran boch dans le main parce qu'on veut qu'un écran et on fait tout avec.
 	game.init(&vga,&clavier,WIDTH,HEIGHT);
 	game.start();
+	*/
 }
