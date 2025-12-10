@@ -1,7 +1,7 @@
 #include "Mob.h"
 #include "Player.h"
 
-void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2, int mc, Mob** m) {
+void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2, int mc, Mob** m, int* ex, int* ey) {
     this->x = x;
     this->y = y;
     WIDTH = w;
@@ -12,6 +12,8 @@ void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2
     mobCount = mc;
     mobs = m;
     this->setPV(100);
+    ecran_x = ex;
+    ecran_y = ey;
 }
 
 void Mob::action() {
@@ -106,4 +108,8 @@ int Mob::getPV() {
 
 void Mob::setPV(int p) {
     pv = p;
+}
+
+bool Mob::activated() {
+    return pv > 0 && getX() >= *ecran_x && getX() < *ecran_x + WIDTH - 64 && getY() >= *ecran_y && getY() < *ecran_y + HEIGHT - 64;
 }

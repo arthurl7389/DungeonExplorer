@@ -9,8 +9,8 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
     set_screen_position(0,0);
     player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, &ecran_x, &ecran_y);
     player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1, &ecran_x, &ecran_y);
-    mob1.init(450, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
-    mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
+    mob1.init(450, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, &ecran_x, &ecran_y);
+    mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, &ecran_x, &ecran_y);
     mobs[0] = &mob1;
     mobs[1] = &mob2;
 }
@@ -43,8 +43,8 @@ void DungeonExplorer::start() {
         }
         
         for (int i = 0; i < mobCount; i++) {
-            if (mobs[i]->getPV() > 0) {
-                //mobs[i]->action();
+            if (mobs[i]->activated()) {
+                mobs[i]->action();
             }
         }
 
@@ -57,7 +57,7 @@ void DungeonExplorer::start() {
     		ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
         }
         for (int i = 0; i < mobCount; i++) {
-            if (mobs[i]->getPV() > 0) {
+            if (mobs[i]->activated()) {
                 ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y);
             }
         }
@@ -91,24 +91,24 @@ void DungeonExplorer::update_screen_position() {
     int delta_x = 0;
     int delta_y = 0;
     if (player1.isAlive()) {
-        if (player1.getX() > ecran_x + WIDTH*5/6) {
+        if (player1.getX() > ecran_x + WIDTH*4/5) {
             delta_x += SPEED;
         }
-        else if (player1.getX() < ecran_x + WIDTH/6 - 64) {
+        else if (player1.getX() < ecran_x + WIDTH/5 - 64) {
             delta_x -= SPEED;
         }
         if (player1.getY() > ecran_y + HEIGHT*3/4) {
             delta_y += SPEED;
         }
-        else if (player1.getY() < ecran_y + HEIGHT/4 - 64) {
+        else if (player1.getY() < ecran_y + HEIGHT/5 - 64) {
             delta_y -= SPEED;
         }
     }
     if (player2.isAlive()) {
-        if (player2.getX() > ecran_x + WIDTH*5/6) {
+        if (player2.getX() > ecran_x + WIDTH*4/5) {
             delta_x += SPEED;
         }
-        else if (player2.getX() < ecran_x + WIDTH/6 - 64) {
+        else if (player2.getX() < ecran_x + WIDTH/5 - 64) {
             delta_x -= SPEED;
         }
         if (player2.getY() > ecran_y + HEIGHT*3/4) {

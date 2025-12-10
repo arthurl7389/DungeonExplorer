@@ -24,8 +24,10 @@ class Mob {
     Player* player2;
     int mobCount;
     Mob** mobs;
+    int* ecran_x;
+    int* ecran_y;
 public:
-    void init(int, int, ui16_t, ui16_t, char, Player*, Player*, int, Mob**);
+    void init(int, int, ui16_t, ui16_t, char, Player*, Player*, int, Mob**, int*, int*);
     Player* nearestPlayer();
     int distanceSquareToPlayer(Player*);
     bool canGoUp();
@@ -39,5 +41,6 @@ public:
     int getY() { return y; }
     int getPV();
     void setPV(int);
+    bool activated();
 };
 #endif
