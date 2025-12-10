@@ -27,7 +27,9 @@ void ThreadDisplay::run(){
 };
 
 void ThreadDisplay::affichage(){
-
+	/*
+	TODO : finir ça, et réfléchir pour relancer le jeu à l'infinie, avec un truc pour lancer de nouvelles parties à chaque fois. 
+	*/
 }
 
 char* ThreadDisplay::getName() {

@@ -79,3 +79,11 @@ int DungeonExplorer::mobs_alive() {
     }
     return nb_alive;
 }
+
+void DungeonExplorer::backendCalculPosition(){
+
+}
+
+void DungeonExplorer::frontendAffichage(){
+
+}
