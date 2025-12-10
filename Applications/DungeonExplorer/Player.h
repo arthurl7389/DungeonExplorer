@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <drivers/Clavier.h>
+#include "Wall.h"
 class Mob;
 
 
@@ -24,11 +25,13 @@ class Player {
     int mobCount;
     Mob** mobs;
     Player* ally;
+    int wallCount;
+    Wall** walls;
     bool alive = true;
     int* ecran_x;
     int* ecran_y;
 public:
-    void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**, Player*, int*, int*);
+    void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**, Player*, int, Wall**, int*, int*);
     void action(bool pressed[5]);
     int getX() { return x; }
     int getY() { return y; }

@@ -6,6 +6,7 @@
 #include <sextant/sprite.h>
 #include "Player.h"
 #include "Mob.h"
+#include "Wall.h"
 
 /**
  * @file DungeonExplorer.h
@@ -27,6 +28,9 @@ class DungeonExplorer {
 	Mob mob1;
 	Mob mob2;
 	Mob* mobs[2] = { &mob1, &mob2 };
+	int wallCount = 1;
+	Wall wall1;
+	Wall* walls[1] = { &wall1 };
 	int ecran_x;
 	int ecran_y;
 public:

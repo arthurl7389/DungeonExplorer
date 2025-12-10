@@ -7,12 +7,15 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 	HEIGHT=h;
     mobCount = 2;
     set_screen_position(0,0);
-    player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, &ecran_x, &ecran_y);
-    player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1, &ecran_x, &ecran_y);
+    player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, wallCount, walls, &ecran_x, &ecran_y);
+    player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1, wallCount, walls, &ecran_x, &ecran_y);
     mob1.init(450, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, &ecran_x, &ecran_y);
     mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, &ecran_x, &ecran_y);
     mobs[0] = &mob1;
     mobs[1] = &mob2;
+    wallCount = 1;
+    wall1.init(0, 0, 20, HEIGHT, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    walls[0] = &wall1;
 }
 
 // 1 : un thread par mov joueur, un pour l'affichage du monde
@@ -59,6 +62,13 @@ void DungeonExplorer::start() {
         for (int i = 0; i < mobCount; i++) {
             if (mobs[i]->activated()) {
                 ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y);
+            }
+        }
+         for (int i = 0; i < wallCount; i++) {
+            int w = walls[i]->X2onScreen() - walls[i]->X1onScreen();
+            int h = walls[i]->Y2onScreen() - walls[i]->Y1onScreen();
+            if (w != 0 && h != 0) {
+                ecran->plot_rectangle(walls[i]->X1onScreen(),walls[i]->Y1onScreen(),w,h,15);
             }
         }
 		ecran->swapBuffer();

@@ -139,6 +139,15 @@ void EcranBochs::plot_square(int x, int y, int size, ui8_t r, ui8_t g, ui8_t b) 
     }
 }
 
+void EcranBochs::plot_rectangle(int x1, int y1, int w, int h, ui8_t color) {
+    for (int row = 0; row < h; row++) {
+        ui32_t base = (y1 + row) * width + x1;
+        for (int col = 0; col < w; col++) {
+            framebuffer[base + col] = color;
+        }
+    }
+}
+
 void EcranBochs::plot_palette(int x, int y, int size) {
     int row, col;
     for (row = 0; row < 16; row++) {
