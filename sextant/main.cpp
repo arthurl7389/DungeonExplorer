@@ -133,6 +133,10 @@ void demo_bochs_32() {
 	}
 }
 
+class NullThread : public Threads {
+	void run() {for(;;) thread_yield();}
+};
+
 void test_thread_mutex(){
 	ui16_t WIDTH = 640, HEIGHT = 400;
     EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
@@ -143,34 +147,13 @@ void test_thread_mutex(){
     vga.set_palette(palette_vga);
     vga.plot_palette(0, 0, 25);
     int x = 0, y = 0;
-	Mutex mutex = Mutex();
-	Thread1Test threadAffichage;
-	Thread2Test threadPosition;
-	threadAffichage.init(&mutex,&vga,&c,WIDTH,HEIGHT,&x,&y);
-	threadPosition.init(&mutex,&vga,&c,WIDTH,HEIGHT,&x,&y);
-	while (true){
-		/*
-		if (c.is_pressed(AZERTY::K_Z)) {
-            y -= SPEED;
-            if (y < 0) y += HEIGHT;
-        }
-        if (c.is_pressed(AZERTY::K_Q)) {
-            x -= SPEED;
-            if (x < 0) x += WIDTH;
-        }
-        if (c.is_pressed(AZERTY::K_S)) {
-            y = (y + SPEED) % HEIGHT;
-        }
-        if (c.is_pressed(AZERTY::K_D)) {
-            x = (x + SPEED) % WIDTH;
-        }
-		vga.clear(1);
-        vga.plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, x, y);
-		vga.swapBuffer();
-		*/
-		threadPosition.run();
-		threadAffichage.run();
-	}
+	Semaphore sem(1);
+	Thread1Test threadAffichage(&sem,&vga,&c,WIDTH,HEIGHT,&x,&y);
+	Thread2Test threadPosition(&sem,&vga,&c,WIDTH,HEIGHT,&x,&y);
+
+	threadPosition.start();
+	threadAffichage.start();
+	while (true) ;
 }
 
 extern "C" void Sextant_main(unsigned long magic, unsigned long addr){

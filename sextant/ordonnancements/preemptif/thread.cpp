@@ -86,7 +86,7 @@ sextant_ret_t thread_subsystem_setup(vaddr_t init_thread_stack_base_addr,size_t 
 	return SEXTANT_OK;
 }
 
-struct thread * create_kernel_thread(kernel_thread_start_routine_t start_func,void *start_arg){
+struct thread * create_kernel_thread(kernel_thread_start_routine_t start_func,void *start_arg, char* name){
 	int i;
 	struct thread *new_thread;
 	void *temp;
@@ -110,6 +110,9 @@ struct thread * create_kernel_thread(kernel_thread_start_routine_t start_func,vo
 	temp = thread_stack[i].stack;
 	new_thread->kernel_stack_base_addr = (vaddr_t) temp;
 	new_thread->kernel_stack_size = THREAD_KERNEL_STACK_SIZE;
+	for (ui8_t i = 0; i < THR_MAX_NAMELEN && name[i]; i++) {
+		new_thread->name[i] = name[i];
+	}
 	if (! new_thread->kernel_stack_base_addr) {
 		new_thread->state = EMPTY;
 		return NULL_THREAD;

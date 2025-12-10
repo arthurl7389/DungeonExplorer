@@ -15,9 +15,9 @@
 class Threads {
 	struct thread *maThread;
 	int pid;
-
+	
 protected:
-
+	
 	void Yield(){
 		 thread_yield();
 	 };
@@ -29,7 +29,7 @@ protected:
 public :
 
 	void start(){
-		maThread = create_kernel_thread((kernel_thread_start_routine_t) Threads::startme, this);
+		maThread = create_kernel_thread((kernel_thread_start_routine_t) Threads::startme, this, getName());
 		pid = maThread->pid;
 	};
 
@@ -40,6 +40,8 @@ public :
 	};
 
 	 virtual void run(){};
+
+	 virtual char* getName(){return "";};
 
 };
 
