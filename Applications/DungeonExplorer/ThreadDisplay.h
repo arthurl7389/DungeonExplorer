@@ -4,7 +4,6 @@
 
 #include <sextant/Activite/Threads.h>
 #include <sextant/Synchronisation/Semaphore/Semaphore.h>
-#include <sextant/Synchronisation/Mutex/Mutex.h>
 #include <drivers/Clavier.h>
 #include <drivers/EcranBochs.h>
 #include <sextant/sprite.h>
@@ -13,8 +12,7 @@
 
 
 class ThreadDisplay : public Threads {
-    //Semaphore *sema;
-	Mutex *mutex;
+	Semaphore *mutex;
     
     Clavier *clavier;
 	EcranBochs *ecran;
@@ -25,9 +23,11 @@ class ThreadDisplay : public Threads {
 	Player *player2;
     int mobCount;
 	Mob** mobs;
+	char* NAME = "Thread2";
 public:
-	ThreadDisplay(Mutex *mutex,EcranBochs*,Clavier*,ui16_t,ui16_t, Player*, Player*, int, Mob**);
+	ThreadDisplay(Semaphore *mutex,EcranBochs*,Clavier*,ui16_t,ui16_t, Player*, Player*, int, Mob**);
 	void run();
 	void affichage();
+	char* getName();
 };
 #endif

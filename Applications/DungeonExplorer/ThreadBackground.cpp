@@ -1,8 +1,7 @@
 #include "ThreadBackground.h"
 
-ThreadBackground::ThreadBackground(Mutex *mutex,EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h,Player* p1,Player* p2,int mobcount,Mob** mobs_){
-	//sema=sem;
-	mutex = mutex;
+ThreadBackground::ThreadBackground(Semaphore *mut,EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h,Player* p1,Player* p2,int mobcount,Mob** mobs_){
+	mutex = mut;
 	
     ecran=vga;
 	clavier=c;
@@ -16,14 +15,19 @@ ThreadBackground::ThreadBackground(Mutex *mutex,EcranBochs* vga,Clavier* c,ui16_
 };
 
 void ThreadBackground::run(){
-	mutex->lock(); //prend le verrou : y'a que lui qui peut travailler
+	 mutex->P(); //prend le verrou, seulement lui peut travailler
 
 	// do : calcul des positions (on peut pas les afficher si on est en train de les modifier, d'où le mutex)
 	calculPosition();
 
-	mutex->unlock(); //il a finit de changer les coordonnées, il rend le verrou
+	 mutex->P(); //il a finit de changer les coordonnées, il rend le verrou
+	 thread_yield(); // on passe la main à un autre thread, pas obliger mais ça fait pas de mal
 };
 
-void calculPosition(){
+void ThreadBackground::calculPosition(){
 
+}
+
+char* ThreadBackground::getName() {
+    return NAME;
 }

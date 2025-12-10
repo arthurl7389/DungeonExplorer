@@ -1,8 +1,7 @@
 #include "ThreadDisplay.h"
 
-ThreadDisplay::ThreadDisplay(Mutex *mutex,EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h,Player* p1,Player* p2,int mobcount,Mob** mobs_){
-	//sema=sem;
-	mutex = mutex;
+ThreadDisplay::ThreadDisplay(Semaphore *mut,EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h,Player* p1,Player* p2,int mobcount,Mob** mobs_){
+	mutex = mut;
 	
     ecran=vga;
 	clavier=c;
@@ -16,14 +15,19 @@ ThreadDisplay::ThreadDisplay(Mutex *mutex,EcranBochs* vga,Clavier* c,ui16_t w,ui
 };
 
 void ThreadDisplay::run(){
-	mutex->lock(); //prend le verrou : y'a que lui qui peut travailler
+	 mutex->P(); //prend le verrou, seulement lui peut travailler
 
 	// do : affichage des infos (on peut pas les modifier si on est en train de les afficher, d'où le mutex)
 	affichage();
 
-	mutex->unlock(); //il a finit d'afficher, il rend le verrou
+	mutex->P(); //il a finit d'afficher, il rend le verrou
+	thread_yield(); // on passe la main à un autre thread, pas obliger mais ça fait pas de mal
 };
 
 void ThreadDisplay::affichage(){
 
+}
+
+char* ThreadDisplay::getName() {
+    return NAME;
 }
