@@ -13,9 +13,17 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
     mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
     mobs[0] = &mob1;
     mobs[1] = &mob2;
-    wallCount = 1;
-    wall1.init(120, 0, 140, HEIGHT, WIDTH, HEIGHT, &ecran_x, &ecran_y);
-    walls[0] = &wall1;
+    wallCount = 5;
+    wallRight.init(0, 0, 20, 1000, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wallLeft.init(780, 0, 800, 1000, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wallTop.init(0, 0, 800, 20, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wallBottom.init(0, 980, 800, 1000, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall1.init(220, 0, 240, 300, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    walls[0] = &wallRight;
+    walls[1] = &wallLeft;
+    walls[2] = &wallTop;
+    walls[3] = &wallBottom;
+    walls[4] = &wall1;
 }
 
 // 1 : un thread par mov joueur, un pour l'affichage du monde

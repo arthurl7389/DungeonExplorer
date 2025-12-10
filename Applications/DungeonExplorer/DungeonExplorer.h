@@ -28,9 +28,13 @@ class DungeonExplorer {
 	Mob mob1;
 	Mob mob2;
 	Mob* mobs[2] = { &mob1, &mob2 };
-	int wallCount = 1;
+	int wallCount = 5;
+	Wall wallRight;
+	Wall wallLeft;
+	Wall wallTop;
+	Wall wallBottom;
 	Wall wall1;
-	Wall* walls[1] = { &wall1 };
+	Wall* walls[5] = { &wallRight, &wallLeft, &wallTop, &wallBottom, &wall1 };
 	int ecran_x;
 	int ecran_y;
 public:

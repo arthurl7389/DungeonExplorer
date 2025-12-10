@@ -91,6 +91,7 @@ bool Player::canGoLeft() {
         }
     }
     for (int i=0; i<wallCount; i++) {
+        int test = wallCount;
         if (walls[i]->getX2() - x < 0 && walls[i]->getX2() - x > -5) {
             if (walls[i]->getY1() - 60 < y && walls[i]->getY2() > y) {
                 return false;
