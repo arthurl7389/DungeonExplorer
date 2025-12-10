@@ -6,8 +6,9 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 	WIDTH=w;
 	HEIGHT=h;
     mobCount = 2;
-    player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2);
-    player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1);
+    set_screen_position(0,0);
+    player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, &ecran_x, &ecran_y);
+    player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1, &ecran_x, &ecran_y);
     mob1.init(450, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
     mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs);
     mobs[0] = &mob1;
@@ -43,20 +44,21 @@ void DungeonExplorer::start() {
         
         for (int i = 0; i < mobCount; i++) {
             if (mobs[i]->getPV() > 0) {
-                mobs[i]->action();
+                //mobs[i]->action();
             }
         }
 
 		ecran->clear(1);
+        update_screen_position();
         if (player1.isAlive()) {
-    		ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX(), player1.getY());
+    		ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
         }    
         if (player2.isAlive()) {
-    		ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX(), player2.getY());
+    		ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
         }
         for (int i = 0; i < mobCount; i++) {
             if (mobs[i]->getPV() > 0) {
-                ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX(), mobs[i]->getY());
+                ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y);
             }
         }
 		ecran->swapBuffer();
@@ -78,4 +80,44 @@ int DungeonExplorer::mobs_alive() {
         }
     }
     return nb_alive;
+}
+
+void DungeonExplorer::set_screen_position(int x, int y) {
+    ecran_x = x;
+    ecran_y = y;
+}
+
+void DungeonExplorer::update_screen_position() {
+    int delta_x = 0;
+    int delta_y = 0;
+    if (player1.isAlive()) {
+        if (player1.getX() > ecran_x + WIDTH*5/6) {
+            delta_x += SPEED;
+        }
+        else if (player1.getX() < ecran_x + WIDTH/6 - 64) {
+            delta_x -= SPEED;
+        }
+        if (player1.getY() > ecran_y + HEIGHT*3/4) {
+            delta_y += SPEED;
+        }
+        else if (player1.getY() < ecran_y + HEIGHT/4 - 64) {
+            delta_y -= SPEED;
+        }
+    }
+    if (player2.isAlive()) {
+        if (player2.getX() > ecran_x + WIDTH*5/6) {
+            delta_x += SPEED;
+        }
+        else if (player2.getX() < ecran_x + WIDTH/6 - 64) {
+            delta_x -= SPEED;
+        }
+        if (player2.getY() > ecran_y + HEIGHT*3/4) {
+            delta_y += SPEED;
+        }
+        else if (player2.getY() < ecran_y + HEIGHT/4 - 64) {
+            delta_y -= SPEED;
+        }
+    }
+    ecran_x += delta_x;
+    ecran_y += delta_y;
 }

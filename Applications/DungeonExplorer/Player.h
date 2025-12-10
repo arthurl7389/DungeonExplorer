@@ -25,8 +25,10 @@ class Player {
     Mob** mobs;
     Player* ally;
     bool alive = true;
+    int* ecran_x;
+    int* ecran_y;
 public:
-    void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**, Player*);
+    void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**, Player*, int*, int*);
     void action(bool pressed[5]);
     int getX() { return x; }
     int getY() { return y; }

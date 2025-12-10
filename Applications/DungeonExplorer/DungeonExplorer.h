@@ -26,10 +26,14 @@ class DungeonExplorer {
 	int mobCount = 2;
 	Mob mob1;
 	Mob mob2;
-	Mob* mobs[2] = { &mob1, &mob2};
+	Mob* mobs[2] = { &mob1, &mob2 };
+	int ecran_x;
+	int ecran_y;
 public:
 	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
 	void start();
 	int mobs_alive();
+	void set_screen_position(int x, int y);
+	void update_screen_position();
 };
 #endif

@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Mob.h"
 
-void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId, int mc, Mob** m, Player* p) {
+void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId, int mc, Mob** m, Player* p, int* ex, int* ey) {
     this->x = x;
     this->y = y;
     clavier = c;
@@ -14,22 +14,26 @@ void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId,
     ally = p;
     this->setAttack(6);
     alive = true;
+    ecran_x = ex;
+    ecran_y = ey;
 }
 
 void Player::action(bool pressed[5]) {
     if (pressed[0] && canGoDown()) {
         y -= SPEED;
-        if (y < 0) y += HEIGHT;
+        if (y < *ecran_y) y = *ecran_y;
     }
     if (pressed[1] && canGoLeft()) {
         x -= SPEED;
-        if (x < 0) x += WIDTH;
+        if (x < *ecran_x) x = *ecran_x;
     }
     if (pressed[2] && canGoUp()) {
-        y = (y + SPEED) % HEIGHT;
+        y += SPEED;
+        if (y > *ecran_y + HEIGHT - 64) y = *ecran_y + HEIGHT - 64;
     }
     if (pressed[3] && canGoRight()) {
-        x = (x + SPEED) % WIDTH;
+        x += SPEED;
+        if (x > *ecran_x + WIDTH - 64) x = *ecran_x + WIDTH - 64;
     }
     if (pressed[4]) {
         for (int i=0; i<mobCount; i++) {
