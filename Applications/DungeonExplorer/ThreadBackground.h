@@ -4,16 +4,20 @@
 
 #include <sextant/Activite/Threads.h>
 #include <sextant/Synchronisation/Semaphore/Semaphore.h>
+#include <Applications/DungeonExplorer/DungeonExplorer.h>
+/*
 #include <drivers/Clavier.h>
 #include <drivers/EcranBochs.h>
 #include <sextant/sprite.h>
 #include "Player.h"
 #include "Mob.h"
+*/
 
 
 class ThreadBackground : public Threads {
 	Semaphore *mutex;
-    
+	char* NAME = "Thread1";
+    /*
     Clavier *clavier;
 	EcranBochs *ecran;
 	ui16_t WIDTH;
@@ -23,9 +27,12 @@ class ThreadBackground : public Threads {
 	Player *player2;
     int mobCount;
 	Mob** mobs;
-	char* NAME = "Thread1";
+	*/
+	DungeonExplorer *DE;
+	
 public:
-	ThreadBackground(Semaphore *mutex,EcranBochs*,Clavier*,ui16_t,ui16_t, Player*, Player*, int, Mob**);
+	//ThreadBackground(Semaphore *mutex,EcranBochs*,Clavier*,ui16_t,ui16_t, Player*, Player*, int, Mob**);
+	ThreadBackground(Semaphore *mutex,DungeonExplorer*);
 	void run();
 	void calculPosition();
 	char* getName();

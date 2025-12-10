@@ -27,7 +27,7 @@
 #include <sextant/sprite.h>
 
 #include <Applications/DungeonExplorer/DungeonExplorer.h>
-#include <sextant/Synchronisation/Mutex/Mutex.h>
+#include <sextant/Synchronisation/Semaphore/Semaphore.h>
 
 #include <Applications/DungeonExplorer/Thread1Test.h>
 #include <Applications/DungeonExplorer/Thread2Test.h>

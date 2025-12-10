@@ -1,8 +1,10 @@
 #include "ThreadBackground.h"
 
-ThreadBackground::ThreadBackground(Semaphore *mut,EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h,Player* p1,Player* p2,int mobcount,Mob** mobs_){
+//ThreadBackground::ThreadBackground(Semaphore *mut,EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h,Player* p1,Player* p2,int mobcount,Mob** mobs_){
+ThreadBackground::ThreadBackground(Semaphore *mut,DungeonExplorer* de){
 	mutex = mut;
-	
+	DE = de;
+	/*
     ecran=vga;
 	clavier=c;
 	WIDTH=w;
@@ -11,7 +13,7 @@ ThreadBackground::ThreadBackground(Semaphore *mut,EcranBochs* vga,Clavier* c,ui1
 	player2 = p2;
     mobCount=mobcount;
 	mobs = mobs_;
-
+	*/
 };
 
 void ThreadBackground::run(){

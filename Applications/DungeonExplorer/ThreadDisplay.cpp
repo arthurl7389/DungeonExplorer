@@ -1,8 +1,10 @@
 #include "ThreadDisplay.h"
 
-ThreadDisplay::ThreadDisplay(Semaphore *mut,EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h,Player* p1,Player* p2,int mobcount,Mob** mobs_){
+//ThreadDisplay::ThreadDisplay(Semaphore *mut,EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h,Player* p1,Player* p2,int mobcount,Mob** mobs_){
+ThreadDisplay::ThreadDisplay(Semaphore *mut,DungeonExplorer* de){
 	mutex = mut;
-	
+	DE = de;
+	/*
     ecran=vga;
 	clavier=c;
 	WIDTH=w;
@@ -11,7 +13,7 @@ ThreadDisplay::ThreadDisplay(Semaphore *mut,EcranBochs* vga,Clavier* c,ui16_t w,
 	player2 = p2;
     mobCount=mobcount;
 	mobs = mobs_;
-
+	*/
 };
 
 void ThreadDisplay::run(){
