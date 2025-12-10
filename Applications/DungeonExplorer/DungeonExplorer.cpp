@@ -68,7 +68,12 @@ void DungeonExplorer::start() {
     		ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
         }
         for (int i = 0; i < mobCount; i++) {
-            if (mobs[i]->activated()) {
+            int pv = mobs[i]->getPV();
+            int diffx1 = mobs[i]->getX() - ecran_x;
+            int diffy1 = mobs[i]->getY() - ecran_y;
+            int diffx2 = mobs[i]->getX() - ecran_x - WIDTH + 64;
+            int diffy2 = mobs[i]->getY() - ecran_y - HEIGHT + 64;
+            if (mobs[i]->getPV() > 0 && mobs[i]->getX() >= ecran_x && mobs[i]->getX() < ecran_x + WIDTH - 64 && mobs[i]->getY() >= ecran_y && mobs[i]->getY() < ecran_y + HEIGHT - 64) {
                 ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y);
             }
         }

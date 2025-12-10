@@ -25,15 +25,17 @@ void Mob::action() {
     }
     if (nearest->getX() < x && canGoLeft()) {
         x -= SPEED;
-        if (x < 0) x += WIDTH;
+        if (x < *ecran_x) x = *ecran_x;
     } else if (nearest->getX() > x && canGoRight()) {
-        x = (x + SPEED) % WIDTH;
+        x += SPEED;
+        if (x > *ecran_x + WIDTH - 64) x = *ecran_x + WIDTH - 64;
     }
     if (nearest->getY() < y && canGoDown()) {
         y -= SPEED;
-        if (y < 0) y += HEIGHT;
+        if (y < *ecran_y) y = *ecran_y;
     } else if (nearest->getY() > y && canGoUp()) {
-        y = (y + SPEED) % HEIGHT;
+        y += SPEED;
+        if (y > *ecran_y + HEIGHT - 64) y = *ecran_y + HEIGHT - 64;
     }
 }
 
