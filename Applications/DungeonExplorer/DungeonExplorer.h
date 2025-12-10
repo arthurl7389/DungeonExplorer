@@ -6,6 +6,7 @@
 #include <sextant/sprite.h>
 #include "Player.h"
 #include "Mob.h"
+#include <sextant/Synchronisation/Semaphore/Semaphore.h>
 
 /**
  * @file DungeonExplorer.h
@@ -20,18 +21,21 @@ class DungeonExplorer {
 	EcranBochs *ecran;
 	ui16_t WIDTH;
 	ui16_t HEIGHT;
-	const char SPEED = 1;
+	const char SPEED = 10;
 	Player player1;
 	Player player2;
 	int mobCount = 2;
 	Mob mob1;
 	Mob mob2;
 	Mob* mobs[2] = { &mob1, &mob2};
+	//Semaphore *mutex; // on verra après si on en a besoin ici
 public:
 	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
 	void start();
 	int mobs_alive();
+	bool inGame();
 	void backendCalculPosition();
-	void frontendAffichage();
+	void frontendAffichageInGame();
+	void frontendAffichageEnd();
 };
 #endif

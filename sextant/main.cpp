@@ -140,7 +140,6 @@ class NullThread : public Threads {
 void test_thread_mutex(){
 	ui16_t WIDTH = 640, HEIGHT = 400;
     EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
-    //const char SPEED = 1;
     Clavier c;
     vga.init();
     vga.clear(0);
@@ -150,7 +149,6 @@ void test_thread_mutex(){
 	Semaphore sem(1);
 	Thread1Test threadAffichage(&sem,&vga,&c,WIDTH,HEIGHT,&x,&y);
 	Thread2Test threadPosition(&sem,&vga,&c,WIDTH,HEIGHT,&x,&y);
-
 	threadPosition.start();
 	threadAffichage.start();
 	while (true) ;
@@ -192,10 +190,9 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	//demo_bochs_8();
 	//demo_bochs_32();
 
-	//Test threads: 
 	//test_thread_mutex();
 
-	// L'écran qu'on va vraiment utiliser:
+	// DungeonExplorer
 	ui16_t WIDTH = 640, HEIGHT = 400;
     EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
 	vga.init();
