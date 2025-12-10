@@ -21,7 +21,7 @@ class DungeonExplorer {
 	EcranBochs *ecran;
 	ui16_t WIDTH;
 	ui16_t HEIGHT;
-	const char SPEED = 10;
+	const char SPEED = 1;
 	Player player1;
 	Player player2;
 	int mobCount = 2;
