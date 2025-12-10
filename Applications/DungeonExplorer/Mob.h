@@ -2,6 +2,7 @@
 #define MOB_H
 
 #include <sextant/types.h>
+#include "Wall.h"
 
 class Player;
 
@@ -24,10 +25,12 @@ class Mob {
     Player* player2;
     int mobCount;
     Mob** mobs;
+    int wallCount;
+    Wall** walls;
     int* ecran_x;
     int* ecran_y;
 public:
-    void init(int, int, ui16_t, ui16_t, char, Player*, Player*, int, Mob**, int*, int*);
+    void init(int, int, ui16_t, ui16_t, char, Player*, Player*, int, Mob**, int, Wall**, int*, int*);
     Player* nearestPlayer();
     int distanceSquareToPlayer(Player*);
     bool canGoUp();

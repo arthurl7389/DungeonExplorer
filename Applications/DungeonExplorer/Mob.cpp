@@ -1,7 +1,7 @@
 #include "Mob.h"
 #include "Player.h"
 
-void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2, int mc, Mob** m, int* ex, int* ey) {
+void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2, int mc, Mob** m, int wc, Wall** wls, int* ex, int* ey) {
     this->x = x;
     this->y = y;
     WIDTH = w;
@@ -11,6 +11,8 @@ void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2
     player2 = p2;
     mobCount = mc;
     mobs = m;
+    wallCount = wc;
+    walls = wls;
     this->setPV(100);
     ecran_x = ex;
     ecran_y = ey;
@@ -57,6 +59,13 @@ bool Mob::canGoRight() {
             }
         }
     }
+    for (int i=0; i<wallCount; i++) {
+        if (walls[i]->getX1() - x > 0 && walls[i]->getX1() - x < 65) {
+            if (walls[i]->getY1() - 60 < y && walls[i]->getY2() > y) {
+                return false;
+            }
+        }
+    }
     return true;
 }
 
@@ -64,6 +73,13 @@ bool Mob::canGoLeft() {
     for (int i=0; i<mobCount; i++) {
         if (mobs[i] != this && mobs[i]->getPV() > 0 && mobs[i]->getX() - x < 0 && mobs[i]->getX() - x > -50) {
             if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2500) {
+                return false;
+            }
+        }
+    }
+    for (int i=0; i<wallCount; i++) {
+        if (walls[i]->getX2() - x < 0 && walls[i]->getX2() - x > -5) {
+            if (walls[i]->getY1() - 60 < y && walls[i]->getY2() > y) {
                 return false;
             }
         }
@@ -79,6 +95,13 @@ bool Mob::canGoUp() {
             }
         }
     }
+    for (int i=0; i<wallCount; i++) {
+        if (walls[i]->getY1() - y > 0 && walls[i]->getY1() - y < 65) {
+            if (walls[i]->getX1() - 60 < x && walls[i]->getX2() > x) {
+                return false;
+            }
+        }
+    }
     return true;
 }
 
@@ -86,6 +109,13 @@ bool Mob::canGoDown() {
     for (int i=0; i<mobCount; i++) {
         if (mobs[i] != this && mobs[i]->getPV() > 0 && mobs[i]->getY() - y < 0 && mobs[i]->getY() - y > -50) {
             if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2500) {
+                return false;
+            }
+        }
+    }
+    for (int i=0; i<wallCount; i++) {
+        if (walls[i]->getY2() - y < 0 && walls[i]->getY2() - y > -5) {
+            if (walls[i]->getX1() - 60 < x && walls[i]->getX2() > x) {
                 return false;
             }
         }

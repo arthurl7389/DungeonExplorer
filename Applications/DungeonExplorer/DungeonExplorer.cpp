@@ -9,12 +9,12 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
     set_screen_position(0,0);
     player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, wallCount, walls, &ecran_x, &ecran_y);
     player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1, wallCount, walls, &ecran_x, &ecran_y);
-    mob1.init(450, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, &ecran_x, &ecran_y);
-    mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, &ecran_x, &ecran_y);
+    mob1.init(450, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
     mobs[0] = &mob1;
     mobs[1] = &mob2;
     wallCount = 1;
-    wall1.init(0, 0, 20, HEIGHT, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall1.init(120, 0, 140, HEIGHT, WIDTH, HEIGHT, &ecran_x, &ecran_y);
     walls[0] = &wall1;
 }
 
