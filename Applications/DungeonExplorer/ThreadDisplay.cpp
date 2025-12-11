@@ -1,16 +1,26 @@
 #include "ThreadDisplay.h"
+#include "DungeonExplorer.h"
 
-ThreadDisplay::ThreadDisplay(Semaphore *sem,char *tab,Ecran *ec){
-	sema=sem;
-	tableauProCons=tab;
-	ecran=ec;
+ThreadDisplay::ThreadDisplay(Semaphore *mut,DungeonExplorer* de){
+	mutex = mut;
+	DE = de;
 };
+
 void ThreadDisplay::run(){
-	int i=0;
-	char c;
 	while (true) {
-		sema->P();
-		c=tableauProCons[i++];
-		ecran->afficherCaractere(10,(i-1),BLANC,NOIR,c);
+		mutex->P();
+
+		if (DE->inGame()){
+			DE->frontendAffichageInGame();
+			mutex->V();
+		} else {
+			DE->frontendAffichageEnd();
+			mutex->V();
+		}
+
 	}
 };
+
+char* ThreadDisplay::getName() {
+    return NAME;
+}

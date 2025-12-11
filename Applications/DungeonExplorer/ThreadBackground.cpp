@@ -1,16 +1,22 @@
 #include "ThreadBackground.h"
+#include "DungeonExplorer.h"
 
-ThreadBackground::ThreadBackground(Semaphore *sem,char *tab,Ecran *ec){
-	sema=sem;
-	tableauProCons=tab;
-	ecran=ec;
+ThreadBackground::ThreadBackground(Semaphore *mut,DungeonExplorer* de){
+	mutex = mut;
+	DE = de;
 };
 
 void ThreadBackground::run(){
-	int n=0;
-	for (int i=0;i<70;i++) {
-		tableauProCons[i]='$';
-		ecran->afficherCaractere(9,i,BLANC,NOIR,tableauProCons[i]);
-		sema->V();
+	while (true){
+		mutex->P();
+
+		DE->backendCalculPosition();
+
+		mutex->V();
+		//thread_yield(); // on passe la main à un autre thread, pas obliger mais ça fait pas de mal
 	}
 };
+
+char* ThreadBackground::getName() {
+    return NAME;
+}
