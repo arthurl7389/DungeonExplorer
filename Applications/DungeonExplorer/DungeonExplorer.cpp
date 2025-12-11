@@ -122,6 +122,7 @@ void DungeonExplorer::backendCalculPosition(){
 
 void DungeonExplorer::frontendAffichageInGame(){
     ecran->clear(1);
+    update_screen_position();
     if (player1.isAlive()) {
     	ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
     }    
