@@ -74,6 +74,7 @@ class EcranBochs {
 
         void plot_square(int x, int y, int size, ui8_t color);
         void plot_square(int x, int y, int size, ui8_t r, ui8_t g, ui8_t b);
+        void plot_rectangle(int x1, int y1, int w, int h, ui8_t color);
 
         void plot_palette(int x, int y, int size);
 
