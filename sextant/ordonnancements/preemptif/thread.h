@@ -108,6 +108,10 @@ struct thread
       struct thread     *rdy_prev, *rdy_next;
     } ready;
   }; /* Anonymous union (gcc extenion) */
+
+  /* Per-thread runtime tick counter for timeslicing (incremented by timer IRQ)
+   * Resets to 0 when the thread is scheduled. */
+  ui32_t run_ticks;
 };
 
 

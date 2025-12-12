@@ -7,7 +7,7 @@ void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId,
     clavier = c;
     WIDTH = w;
     HEIGHT = h;
-    SPEED = 5*sp;
+    SPEED = 3*sp;
     player_id = pId;
     mobCount = mc;
     mobs = m;
