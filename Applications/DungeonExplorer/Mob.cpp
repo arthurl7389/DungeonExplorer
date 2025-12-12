@@ -144,5 +144,4 @@ void Mob::setPV(int p) {
 
 bool Mob::activated() {
     return pv > 0 && getX() >= *ecran_x && getX() < *ecran_x + WIDTH && getY() >= *ecran_y && getY() < *ecran_y + HEIGHT;
-    //return pv > 0 && getX() >= *ecran_x && getX() < *ecran_x + WIDTH - 64 && getY() >= *ecran_y && getY() < *ecran_y + HEIGHT - 64;
 }
