@@ -7,6 +7,9 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 	clavier=c;
 	WIDTH=w;
 	HEIGHT=h;
+    sem = new Semaphore(1);
+    tBackground = new ThreadBackground(sem, this);
+    tDisplay = new ThreadDisplay(sem, this);
     mobCount = 14;
     set_screen_position(0,0);
     player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, wallCount, walls, &ecran_x, &ecran_y);
@@ -67,12 +70,11 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 }
 
 void DungeonExplorer::start() {
-    Semaphore sem(1);
-    ThreadBackground tBackground(&sem, this);
-    ThreadDisplay tDisplay(&sem,this);
-    tBackground.start();
-    tDisplay.start();
-    while(true);
+    tBackground->start();
+    tDisplay->start();
+    while(true) {
+        thread_yield();
+    }
 }
 
 int DungeonExplorer::mobs_alive() {

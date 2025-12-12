@@ -8,6 +8,8 @@
 #include "Mob.h"
 #include "Wall.h"
 #include <sextant/Synchronisation/Semaphore/Semaphore.h>
+#include "ThreadBackground.h"
+#include "ThreadDisplay.h"
 
 
 /**
@@ -58,7 +60,9 @@ class DungeonExplorer {
 	Wall* walls[12] = { &wallRight, &wallLeft, &wallTop, &wallBottom, &wall1, &wall2, &wall3, &wall4, &wall5, &wall6, &wall7, &wall8 };
 	int ecran_x;
 	int ecran_y;
-	//Semaphore *mutex; // on verra après si on en a besoin ici
+	Semaphore* sem;
+	ThreadBackground* tBackground;
+	ThreadDisplay* tDisplay;
 public:
 	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
 	void start();

@@ -13,9 +13,11 @@ void ThreadDisplay::run(){
 		if (DE->inGame()){
 			DE->frontendAffichageInGame();
 			mutex->V();
+			thread_yield();
 		} else {
 			DE->frontendAffichageEnd();
 			mutex->V();
+			thread_yield();
 		}
 
 	}

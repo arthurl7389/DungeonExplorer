@@ -13,7 +13,7 @@ void ThreadBackground::run(){
 		DE->backendCalculPosition();
 
 		mutex->V();
-		//thread_yield(); // on passe la main à un autre thread, pas obliger mais ça fait pas de mal
+		thread_yield();
 	}
 };
 
