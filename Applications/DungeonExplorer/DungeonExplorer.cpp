@@ -123,8 +123,8 @@ void DungeonExplorer::update_screen_position() {
             delta_y -= SPEED;
         }
     }
-    ecran_x += delta_x;
-    ecran_y += delta_y;
+    ecran_x += 5*delta_x;
+    ecran_y += 5*delta_y;
 }
 
 bool DungeonExplorer::inGame(){
