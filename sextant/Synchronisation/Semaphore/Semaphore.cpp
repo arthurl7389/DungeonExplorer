@@ -11,9 +11,9 @@ int Semaphore::sem = 0;
 int Semaphore::lock = 0;
 
 void Semaphore::P(){
-	mySpinlock.Take(&lock);
+	// mySpinlock.Take(&lock);
 	value=value-1;
-	mySpinlock.Release(&lock);
+	// mySpinlock.Release(&lock);
 
 	if (value<0) {
 		sched_set_waiting(thread_get_current(),sem_id);
@@ -28,16 +28,16 @@ int Semaphore::Valeur(){
 
 void Semaphore::V(){
 	if (value<0) {
-		mySpinlock.Take(&lock);
+		// mySpinlock.Take(&lock);
 		value=value+1;
-		mySpinlock.Release(&lock);
+		// mySpinlock.Release(&lock);
 
 		sched_set_ready(pop_in_waiting_queue(sem_id));
 	}
 	else {
-		mySpinlock.Take(&lock);
+		// mySpinlock.Take(&lock);
 		value=value+1;
-		mySpinlock.Release(&lock);
+		// mySpinlock.Release(&lock);
 	}
 };
 

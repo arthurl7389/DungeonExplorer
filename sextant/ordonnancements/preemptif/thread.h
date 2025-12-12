@@ -132,7 +132,7 @@ sextant_ret_t thread_subsystem_setup(vaddr_t init_thread_stack_base_addr,
  */
 struct thread *
 create_kernel_thread(kernel_thread_start_routine_t start_func,
-			 void *start_arg);
+			 void *start_arg, char* name = "");
 
 
 /**

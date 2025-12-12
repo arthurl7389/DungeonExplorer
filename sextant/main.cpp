@@ -27,7 +27,10 @@
 #include <sextant/sprite.h>
 
 #include <Applications/DungeonExplorer/DungeonExplorer.h>
+#include <sextant/Synchronisation/Semaphore/Semaphore.h>
 
+#include <Applications/DungeonExplorer/Thread1Test.h>
+#include <Applications/DungeonExplorer/Thread2Test.h>
 
 extern char __e_kernel,__b_kernel, __b_data, __e_data,  __b_stack, __e_load ;
 int i;
@@ -130,6 +133,27 @@ void demo_bochs_32() {
 	}
 }
 
+class NullThread : public Threads {
+	void run() {for(;;) thread_yield();}
+};
+
+void test_thread_mutex(){
+	ui16_t WIDTH = 640, HEIGHT = 400;
+    EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
+    Clavier c;
+    vga.init();
+    vga.clear(0);
+    vga.set_palette(palette_vga);
+    vga.plot_palette(0, 0, 25);
+    int x = 0, y = 0;
+	Semaphore sem(1);
+	Thread1Test threadAffichage(&sem,&vga,&c,WIDTH,HEIGHT,&x,&y);
+	Thread2Test threadPosition(&sem,&vga,&c,WIDTH,HEIGHT,&x,&y);
+	threadPosition.start();
+	threadAffichage.start();
+	while (true) ;
+}
+
 extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	Ecran ecran;
 	Clavier clavier;
@@ -162,7 +186,13 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
 	// initialize pci bus to detect GPU address
 	checkBus(0);
 
-	// L'écran qu'on va vraiment utiliser:
+	//demo_vga();
+	//demo_bochs_8();
+	//demo_bochs_32();
+
+	//test_thread_mutex();
+
+	// DungeonExplorer
 	ui16_t WIDTH = 640, HEIGHT = 400;
     EcranBochs vga(WIDTH, HEIGHT, VBE_MODE::_8);
 	vga.init();
@@ -171,13 +201,7 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
     vga.set_palette(palette_vga);
     vga.plot_palette(0, 0, 25);
 
-
-	//demo_vga();
-	//demo_bochs_8();
-	//demo_bochs_32();
-
-	//test : note : il vaut mieux mettre l'écran boch dans le main parce qu'on veut qu'un écran
-	// et on fait tout avec!
+	//on met l'écran boch dans le main parce qu'on veut qu'un écran et on fait tout avec.
 	game.init(&vga,&clavier,WIDTH,HEIGHT);
 	game.start();
 }

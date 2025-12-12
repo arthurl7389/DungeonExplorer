@@ -6,6 +6,9 @@
 #include <sextant/sprite.h>
 #include "Player.h"
 #include "Mob.h"
+#include "Wall.h"
+#include <sextant/Synchronisation/Semaphore/Semaphore.h>
+
 
 /**
  * @file DungeonExplorer.h
@@ -26,9 +29,26 @@ class DungeonExplorer {
 	int mobCount = 2;
 	Mob mob1;
 	Mob mob2;
-	Mob* mobs[2] = { &mob1, &mob2};
+	Mob* mobs[2] = { &mob1, &mob2 };
+	int wallCount = 5;
+	Wall wallRight;
+	Wall wallLeft;
+	Wall wallTop;
+	Wall wallBottom;
+	Wall wall1;
+	Wall* walls[5] = { &wallRight, &wallLeft, &wallTop, &wallBottom, &wall1 };
+	int ecran_x;
+	int ecran_y;
+	//Semaphore *mutex; // on verra après si on en a besoin ici
 public:
 	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
 	void start();
+	int mobs_alive();
+	void set_screen_position(int x, int y);
+	void update_screen_position();
+	bool inGame();
+	void backendCalculPosition();
+	void frontendAffichageInGame();
+	void frontendAffichageEnd();
 };
 #endif
