@@ -167,7 +167,7 @@ void EcranBochs::plot_sprite(void* buffer, ui16_t width, ui16_t height, ui16_t x
             ui32_t base = (y + row) * getWidth() + x;
             for (ui16_t col = 0; col < width; col++) {
                 ui8_t color = *buf++;
-                if (color != 0) {
+                if (color != 0 && x + col < getWidth() && y + row < getHeight()) {
                     framebuffer[base + col] = color;
                 }
             }
