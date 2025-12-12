@@ -45,5 +45,7 @@ public:
     int getPV();
     void setPV(int);
     bool activated();
+    bool printable();
+    bool wallBetween(Player*);
 };
 #endif

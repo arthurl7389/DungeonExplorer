@@ -143,5 +143,22 @@ void Mob::setPV(int p) {
 }
 
 bool Mob::activated() {
-    return pv > 0 && getX() >= *ecran_x && getX() < *ecran_x + WIDTH && getY() >= *ecran_y && getY() < *ecran_y + HEIGHT;
+    return pv > 0 && ((player1->isAlive() && !wallBetween(player1)) || (player2->isAlive() && !wallBetween(player2))) && getX() >= *ecran_x && getX() < *ecran_x + WIDTH && getY() >= *ecran_y && getY() < *ecran_y + HEIGHT;
+}
+
+bool Mob::wallBetween(Player* player) {
+    for (int i=0; i<wallCount; i++) {
+        for (float t=0; t<=1.0; t+=0.01) {
+            float x_middle = t * x + (1-t) * player->getX();
+            float y_middle = t * y + (1-t) * player->getY();
+            if (x_middle >= walls[i]->getX1() && x_middle <= walls[i]->getX2() && y_middle >= walls[i]->getY1() && y_middle <= walls[i]->getY2()) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Mob::printable() {
+    return pv > 0 && getX() + WIDTH >= *ecran_x && getX() < *ecran_x + WIDTH && getY() + HEIGHT >= *ecran_y && getY() < *ecran_y + HEIGHT;
 }

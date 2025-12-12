@@ -53,10 +53,10 @@ void EcranBochs::swapBuffer() {
 }
 
 void EcranBochs::clear(ui8_t color) {
-    for (ui16_t y = 0; y < height; y++) {
-        for (ui16_t x = 0; x < width; x++) {
-            paint(x, y, color);
-        }
+    // Direct memory write - much faster than calling paint() 256k times
+    ui32_t size = width * height;
+    for (ui32_t i = 0; i < size; i++) {
+        framebuffer[i] = color;
     }
 }
 

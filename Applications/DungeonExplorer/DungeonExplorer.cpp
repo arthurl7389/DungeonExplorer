@@ -170,7 +170,7 @@ void DungeonExplorer::frontendAffichageInGame(){
     	ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
     }
     for (int i = 0; i < mobCount; i++) {
-        if (mobs[i]->activated()) {
+        if (mobs[i]->printable()) {
             ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y);
         }
     }
