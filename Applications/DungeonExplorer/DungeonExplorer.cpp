@@ -94,30 +94,30 @@ void DungeonExplorer::update_screen_position() {
     int delta_x = 0;
     int delta_y = 0;
     if (player1.isAlive()) {
-        if (player1.getX() > ecran_x + WIDTH*4/5) {
+        if (player1.getX() > ecran_x + WIDTH*3/4) {
             delta_x += SPEED;
         }
-        else if (player1.getX() < ecran_x + WIDTH/5 - 64) {
+        else if (player1.getX() < ecran_x + WIDTH/4 - 64) {
             delta_x -= SPEED;
         }
-        if (player1.getY() > ecran_y + HEIGHT*3/4) {
+        if (player1.getY() > ecran_y + HEIGHT*2/3) {
             delta_y += SPEED;
         }
-        else if (player1.getY() < ecran_y + HEIGHT/5 - 64) {
+        else if (player1.getY() < ecran_y + HEIGHT/3 - 64) {
             delta_y -= SPEED;
         }
     }
     if (player2.isAlive()) {
-        if (player2.getX() > ecran_x + WIDTH*4/5) {
+        if (player2.getX() > ecran_x + WIDTH*3/4) {
             delta_x += SPEED;
         }
-        else if (player2.getX() < ecran_x + WIDTH/5 - 64) {
+        else if (player2.getX() < ecran_x + WIDTH/4 - 64) {
             delta_x -= SPEED;
         }
-        if (player2.getY() > ecran_y + HEIGHT*3/4) {
+        if (player2.getY() > ecran_y + HEIGHT*2/3) {
             delta_y += SPEED;
         }
-        else if (player2.getY() < ecran_y + HEIGHT/4 - 64) {
+        else if (player2.getY() < ecran_y + HEIGHT/3 - 64) {
             delta_y -= SPEED;
         }
     }
