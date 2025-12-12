@@ -153,7 +153,7 @@ void DungeonExplorer::backendCalculPosition(){
         
     for (int i = 0; i < mobCount; i++) {
         if (mobs[i]->activated()) {
-            //mobs[i]->action();
+            mobs[i]->action();
         }
     }
 }
