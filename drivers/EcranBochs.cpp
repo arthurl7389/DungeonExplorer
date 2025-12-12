@@ -52,6 +52,7 @@ void EcranBochs::swapBuffer() {
     topBuffer = !topBuffer;
 }
 
+//RAPIDE
 void EcranBochs::clear(ui8_t color) {
     // Direct memory write - much faster than calling paint() 256k times
     ui32_t size = width * height;
@@ -59,6 +60,14 @@ void EcranBochs::clear(ui8_t color) {
         framebuffer[i] = color;
     }
 }
+
+/*void EcranBochs::clear(ui8_t color) {
+    for (ui16_t y = 0; y < height; y++) {
+        for (ui16_t x = 0; x < width; x++) {
+            paint(x, y, color);
+        }
+    }
+}*/
 
 void EcranBochs::clear(ui8_t r, ui8_t g, ui8_t b) {
     for (ui16_t y = 0; y < height; y++) {
@@ -158,7 +167,7 @@ void EcranBochs::plot_palette(int x, int y, int size) {
 }
 
 
-void EcranBochs::plot_sprite(void* buffer, ui16_t width, ui16_t height, ui16_t x, ui16_t y) {
+void EcranBochs::plot_sprite(void* buffer, ui16_t width, ui16_t height, int x, int y) {
     switch (mode)
     {
     case _8: {
@@ -167,7 +176,7 @@ void EcranBochs::plot_sprite(void* buffer, ui16_t width, ui16_t height, ui16_t x
             ui32_t base = (y + row) * getWidth() + x;
             for (ui16_t col = 0; col < width; col++) {
                 ui8_t color = *buf++;
-                if (color != 0 && x + col < getWidth() && y + row < getHeight()) {
+                if (color != 0 && x + col < getWidth() && y + row < getHeight() && x + col >=0 && y + row >=0) {
                     framebuffer[base + col] = color;
                 }
             }
