@@ -7,25 +7,63 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 	clavier=c;
 	WIDTH=w;
 	HEIGHT=h;
-    mobCount = 2;
+    mobCount = 14;
     set_screen_position(0,0);
     player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, wallCount, walls, &ecran_x, &ecran_y);
     player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1, wallCount, walls, &ecran_x, &ecran_y);
-    mob1.init(450, 150, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
-    mob2.init(450, 200, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob1.init(270, 125, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob2.init(700, 300, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob3.init(600, 300, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob4.init(600, 700, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob5.init(700, 700, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob6.init(650, 770, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob7.init(300, 825, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob8.init(300, 900, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob9.init(100, 450, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob10.init(225, 450, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob11.init(375, 450, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob12.init(375, 550, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob13.init(375, 650, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob14.init(100, 550, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
     mobs[0] = &mob1;
     mobs[1] = &mob2;
-    wallCount = 5;
+    mobs[2] = &mob3;
+    mobs[3] = &mob4;
+    mobs[4] = &mob5;
+    mobs[5] = &mob6;
+    mobs[6] = &mob7;
+    mobs[7] = &mob8;
+    mobs[8] = &mob9;
+    mobs[9] = &mob10;
+    mobs[10] = &mob11;
+    mobs[11] = &mob12;
+    mobs[12] = &mob13;
+    mobs[13] = &mob14;
+    wallCount = 12;
     wallRight.init(0, 0, 20, 1000, WIDTH, HEIGHT, &ecran_x, &ecran_y);
     wallLeft.init(780, 0, 800, 1000, WIDTH, HEIGHT, &ecran_x, &ecran_y);
     wallTop.init(0, 0, 800, 20, WIDTH, HEIGHT, &ecran_x, &ecran_y);
     wallBottom.init(0, 980, 800, 1000, WIDTH, HEIGHT, &ecran_x, &ecran_y);
-    wall1.init(220, 0, 240, 300, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall1.init(220, 0, 240, 250, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall2.init(0, 380, 600, 400, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall3.init(500, 400, 520, 800, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall4.init(200, 780, 600, 800, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall5.init(200, 630, 300, 650, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall6.init(200, 550, 300, 570, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall7.init(200, 550, 220, 650, WIDTH, HEIGHT, &ecran_x, &ecran_y);
+    wall8.init(280, 550, 300, 650, WIDTH, HEIGHT, &ecran_x, &ecran_y);
     walls[0] = &wallRight;
     walls[1] = &wallLeft;
     walls[2] = &wallTop;
     walls[3] = &wallBottom;
     walls[4] = &wall1;
+    walls[5] = &wall2;
+    walls[6] = &wall3;
+    walls[7] = &wall4;
+    walls[8] = &wall5;
+    walls[9] = &wall6;
+    walls[10] = &wall7;
+    walls[11] = &wall8;
 }
 
 void DungeonExplorer::start() {
@@ -115,7 +153,7 @@ void DungeonExplorer::backendCalculPosition(){
         
     for (int i = 0; i < mobCount; i++) {
         if (mobs[i]->activated()) {
-            mobs[i]->action();
+            //mobs[i]->action();
         }
     }
 }
