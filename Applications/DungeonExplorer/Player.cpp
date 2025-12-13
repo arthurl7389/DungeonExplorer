@@ -56,7 +56,7 @@ void Player::setAttack(int a) {
 
 bool Player::canGoRight() {
     if (ally->isAlive() && ally->getX() - x > 0 && ally->getX() - x < 60) {
-        if ((ally->getY() - y) * (ally->getY() - y) < 2000) {
+        if ((ally->getY() - y) * (ally->getY() - y) < 3600) {
             return false;
         }
     }
@@ -79,7 +79,7 @@ bool Player::canGoRight() {
 
 bool Player::canGoLeft() {
     if (ally->isAlive() && ally->getX() - x < 0 && ally->getX() - x > -60) {
-        if ((ally->getY() - y) * (ally->getY() - y) < 2000) {
+        if ((ally->getY() - y) * (ally->getY() - y) < 3600) {
             return false;
         }
     }
@@ -103,7 +103,7 @@ bool Player::canGoLeft() {
 
 bool Player::canGoDown() {
     if (ally->isAlive() && ally->getY() - y > 0 && ally->getY() - y < 64) {
-        if ((ally->getX() - x) * (ally->getX() - x) < 2000) {
+        if ((ally->getX() - x) * (ally->getX() - x) < 3000) {
             return false;
         }
     }
@@ -126,7 +126,7 @@ bool Player::canGoDown() {
 
 bool Player::canGoUp() {
     if (ally->isAlive() && ally->getY() - y < 0 && ally->getY() - y > -64) {
-        if ((ally->getX() - x) * (ally->getX() - x) < 2000) {
+        if ((ally->getX() - x) * (ally->getX() - x) < 3000) {
             return false;
         }
     }
