@@ -20,7 +20,7 @@ void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2
 
 void Mob::action() {
     Player* nearest = nearestPlayer();
-    if (distanceSquareToPlayer(nearest) < 2500) {
+    if (distanceSquareToPlayer(nearest) < 3000) {
         nearest->kill(); 
     }
     if (nearest->getX() < x && canGoLeft()) {
