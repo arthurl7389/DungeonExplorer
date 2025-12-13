@@ -16,6 +16,9 @@ void ThreadDisplay::run(){
 			thread_yield();
 		} else {
 			DE->frontendAffichageEnd();
+			if (DE->launchGame()){
+				DE->reset();
+			}
 			mutex->V();
 			thread_yield();
 		}

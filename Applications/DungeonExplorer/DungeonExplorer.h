@@ -66,6 +66,7 @@ class DungeonExplorer {
 public:
 	void init(EcranBochs*,Clavier*,ui16_t,ui16_t);
 	void start();
+	bool launchGame();
 	int mobs_alive();
 	void set_screen_position(int x, int y);
 	void update_screen_position();
@@ -73,5 +74,6 @@ public:
 	void backendCalculPosition();
 	void frontendAffichageInGame();
 	void frontendAffichageEnd();
+	void reset();
 };
 #endif
