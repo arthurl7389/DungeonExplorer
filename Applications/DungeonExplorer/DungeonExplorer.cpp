@@ -70,11 +70,23 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 }
 
 void DungeonExplorer::start() {
+    while (not launchGame()){
+        ecran->clear(1);
+        // remplacer ça par un sprite adapté
+        ecran->plot_sprite(gameover, 289, 40, 175, 180);
+        ecran->plot_sprite(victoire, 194, 40, 223, 180);
+        //
+        ecran->swapBuffer();
+    }
     tBackground->start();
     tDisplay->start();
     while(true) {
         thread_yield();
     }
+}
+
+bool DungeonExplorer::launchGame(){
+    return clavier->is_pressed(AZERTY::K_G);
 }
 
 int DungeonExplorer::mobs_alive() {
@@ -192,4 +204,40 @@ void DungeonExplorer::frontendAffichageEnd(){
         ecran->plot_sprite(gameover, 289, 40, 175, 180);
     }
     ecran->swapBuffer();
+}
+
+void DungeonExplorer::reset(){
+    // l'idée est de reset les variables du jeu pour relancer une partie, donc pas besoin de redéfinir l'écran, le clavier etc...
+    // il faut seulement remettre à zéro les mobs et les joueurs.
+    set_screen_position(0,0);
+    player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, wallCount, walls, &ecran_x, &ecran_y);
+    player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1, wallCount, walls, &ecran_x, &ecran_y);
+    mob1.init(270, 125, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob2.init(730, 300, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob3.init(690, 300, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob4.init(600, 700, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob5.init(700, 700, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob6.init(650, 770, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob7.init(300, 825, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob8.init(300, 900, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob9.init(100, 450, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob10.init(225, 450, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob11.init(375, 450, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob12.init(375, 550, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob13.init(375, 650, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mob14.init(100, 550, WIDTH, HEIGHT, SPEED, &player1, &player2, mobCount, mobs, wallCount, walls, &ecran_x, &ecran_y);
+    mobs[0] = &mob1;
+    mobs[1] = &mob2;
+    mobs[2] = &mob3;
+    mobs[3] = &mob4;
+    mobs[4] = &mob5;
+    mobs[5] = &mob6;
+    mobs[6] = &mob7;
+    mobs[7] = &mob8;
+    mobs[8] = &mob9;
+    mobs[9] = &mob10;
+    mobs[10] = &mob11;
+    mobs[11] = &mob12;
+    mobs[12] = &mob13;
+    mobs[13] = &mob14;
 }
