@@ -72,10 +72,7 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 void DungeonExplorer::start() {
     while (not launchGame()){
         ecran->clear(1);
-        // remplacer ça par un sprite adapté
-        ecran->plot_sprite(gameover, 289, 40, 175, 180);
-        ecran->plot_sprite(victoire, 194, 40, 223, 180);
-        //
+        ecran->plot_sprite(accueil, 596, 318, 22, 41);
         ecran->swapBuffer();
     }
     tBackground->start();
