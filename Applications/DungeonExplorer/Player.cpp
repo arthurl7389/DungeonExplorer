@@ -61,8 +61,8 @@ bool Player::canGoRight() {
         }
     }
     for (int i=0; i<mobCount; i++) {
-        if (mobs[i]->getPV() > 0 && mobs[i]->getX() - x > 0 && mobs[i]->getX() - x < 60) {
-            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2000) {
+        if (mobs[i]->getPV() > 0 && mobs[i]->getX() - x > 0 && mobs[i]->getX() - x < 50) {
+            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2700) {
                 return false;
             }
         }
@@ -84,8 +84,8 @@ bool Player::canGoLeft() {
         }
     }
     for (int i=0; i<mobCount; i++) {
-        if (mobs[i]->getPV() > 0 && mobs[i]->getX() - x < 0 && mobs[i]->getX() - x > -60) {
-            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2000) {
+        if (mobs[i]->getPV() > 0 && mobs[i]->getX() - x < 0 && mobs[i]->getX() - x > -50) {
+            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2700) {
                 return false;
             }
         }
@@ -108,7 +108,7 @@ bool Player::canGoDown() {
         }
     }
     for (int i=0; i<mobCount; i++) {
-        if (mobs[i]->getPV() > 0 && mobs[i]->getY() - y > 0 && mobs[i]->getY() - y < 64) {
+        if (mobs[i]->getPV() > 0 && mobs[i]->getY() - y > 0 && mobs[i]->getY() - y < 55) {
             if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2000) {
                 return false;
             }
@@ -125,13 +125,13 @@ bool Player::canGoDown() {
 }
 
 bool Player::canGoUp() {
-    if (ally->isAlive() && ally->getY() - y < 0 && ally->getY() - y > -64) {
+    if (ally->isAlive() && ally->getY() - y < 0 && ally->getY() - y > -50) {
         if ((ally->getX() - x) * (ally->getX() - x) < 3000) {
             return false;
         }
     }
     for (int i=0; i<mobCount; i++) {
-        if (mobs[i]->getPV() > 0 && mobs[i]->getY() - y < 0 && mobs[i]->getY() - y > -64) {
+        if (mobs[i]->getPV() > 0 && mobs[i]->getY() - y < 0 && mobs[i]->getY() - y > -55) {
             if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2000) {
                 return false;
             }
