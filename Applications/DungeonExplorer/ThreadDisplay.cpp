@@ -16,8 +16,11 @@ void ThreadDisplay::run(){
 			thread_yield();
 		} else {
 			DE->frontendAffichageEnd();
-			if (DE->launchGame()){
+			if (DE->launchGame() != 0){
 				DE->reset();
+				if (DE->launchGame() == 1) {
+				    DE->onePlayerMode();
+				}
 			}
 			mutex->V();
 			thread_yield();

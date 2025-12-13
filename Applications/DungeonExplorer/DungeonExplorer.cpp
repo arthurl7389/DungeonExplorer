@@ -40,10 +40,13 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 }
 
 void DungeonExplorer::start() {
-    while (not launchGame()){
+    while (launchGame() == 0){
         ecran->clear(1);
         ecran->plot_sprite(accueil, 596, 318, 22, 41);
         ecran->swapBuffer();
+    }
+    if (launchGame() == 1) {
+        onePlayerMode();
     }
     tBackground->start();
     tDisplay->start();
@@ -52,8 +55,18 @@ void DungeonExplorer::start() {
     }
 }
 
-bool DungeonExplorer::launchGame(){
-    return clavier->is_pressed(AZERTY::K_G);
+int DungeonExplorer::launchGame(){
+    if (clavier->is_pressed(AZERTY::K_G)) {
+        return 2;
+    }
+    if (clavier->is_pressed(AZERTY::K_H)) {
+        return 1;
+    }
+    return 0;
+}
+
+void DungeonExplorer::onePlayerMode(){
+    player2.kill();
 }
 
 int DungeonExplorer::mobs_alive() {
