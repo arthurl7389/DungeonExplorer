@@ -17,6 +17,9 @@ void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId,
     alive = true;
     ecran_x = ex;
     ecran_y = ey;
+    moving = false;
+    vertically = false;
+    leftFacing = false;
 }
 
 void Player::action(bool pressed[5]) {
