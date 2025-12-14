@@ -78,5 +78,5 @@ class EcranBochs {
 
         void plot_palette(int x, int y, int size);
 
-        void plot_sprite(void* buffer, ui16_t width, ui16_t height, int x, int y);
+        void plot_sprite(void* buffer, ui16_t width, ui16_t height, int x, int y, bool reverse = false);
 };

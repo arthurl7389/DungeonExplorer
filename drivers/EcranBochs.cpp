@@ -167,7 +167,7 @@ void EcranBochs::plot_palette(int x, int y, int size) {
 }
 
 
-void EcranBochs::plot_sprite(void* buffer, ui16_t width, ui16_t height, int x, int y) {
+void EcranBochs::plot_sprite(void* buffer, ui16_t width, ui16_t height, int x, int y, bool reverse) {
     switch (mode)
     {
     case _8: {
@@ -176,8 +176,12 @@ void EcranBochs::plot_sprite(void* buffer, ui16_t width, ui16_t height, int x, i
             ui32_t base = (y + row) * getWidth() + x;
             for (ui16_t col = 0; col < width; col++) {
                 ui8_t color = *buf++;
-                if (color != 0 && x + col < getWidth() && y + row < getHeight() && x + col >=0 && y + row >=0) {
+                ui16_t reverse_col = width - 1 - col;
+                if (!reverse && color != 0 && x + col < getWidth() && y + row < getHeight() && x + col >=0 && y + row >=0) {
                     framebuffer[base + col] = color;
+                }
+                if (reverse && color != 0 && x + reverse_col < getWidth() && y + row < getHeight() && x + reverse_col >=0 && y + row >=0) {
+                    framebuffer[base + reverse_col] = color;
                 }
             }
         }
