@@ -33,6 +33,7 @@ void Player::action(bool pressed[5]) {
         x -= SPEED;
         if (x < *ecran_x) x = *ecran_x;
         moving = true;
+        leftFacing = true;
     }
     if (pressed[2] && canGoDown()) {
         y += SPEED;
@@ -44,6 +45,7 @@ void Player::action(bool pressed[5]) {
         x += SPEED;
         if (x > *ecran_x + WIDTH - 64) x = *ecran_x + WIDTH - 64;
         moving = true;
+        leftFacing = false;
     }
     if (pressed[4]) {
         for (int i=0; i<mobCount; i++) {

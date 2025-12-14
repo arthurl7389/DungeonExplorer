@@ -159,31 +159,31 @@ void DungeonExplorer::frontendAffichageInGame(){
     if (player1.isAlive()) {
     	if (player1.isMoving()) {
     		if ((compt/300) % 2 == 0)
-    			ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+    			ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y, player1.isLeftFacing());
     		else {
                 if (player1.goVertically()) {
-                    ecran->plot_sprite(sprite_data_player1_vertically, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+                    ecran->plot_sprite(sprite_data_player1_vertically, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y, player1.isLeftFacing());
                 } else {
-        			ecran->plot_sprite(sprite_data_player1_running, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+        			ecran->plot_sprite(sprite_data_player1_running, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y, player1.isLeftFacing());
                 }
             }
         } else {
-    		ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+    		ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y, player1.isLeftFacing());
     	}
     }    
     if (player2.isAlive()) {
         if (player2.isMoving()) {
             if ((compt/300) % 2 == 0)
-                ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+                ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y, player2.isLeftFacing());
             else {
                 if (player2.goVertically()) {
-                    ecran->plot_sprite(sprite_data_player2_vertically, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+                    ecran->plot_sprite(sprite_data_player2_vertically, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y, player2.isLeftFacing());
                 } else {
-                    ecran->plot_sprite(sprite_data_player2_running, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+                    ecran->plot_sprite(sprite_data_player2_running, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y, player2.isLeftFacing());
                 }
             }
         } else {
-            ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+            ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y, player2.isLeftFacing());
         }
     }
     for (int i = 0; i < mobCount; i++) {
