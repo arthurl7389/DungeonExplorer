@@ -29,6 +29,8 @@ class Mob {
     Wall** walls;
     int* ecran_x;
     int* ecran_y;
+    bool moving = false;
+    bool leftFacing = false;
 public:
     void init(int, int, ui16_t, ui16_t, char, Player*, Player*, int, Mob**, int, Wall**, int*, int*);
     Player* nearestPlayer();
@@ -47,5 +49,7 @@ public:
     bool activated();
     bool printable();
     bool wallBetween(Player*);
+    bool isMoving() { return moving; }
+    bool isLeftFacing() { return leftFacing; }
 };
 #endif

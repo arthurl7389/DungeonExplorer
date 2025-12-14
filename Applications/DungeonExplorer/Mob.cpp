@@ -19,6 +19,7 @@ void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2
 }
 
 void Mob::action() {
+    moving = false;
     Player* nearest = nearestPlayer();
     if (distanceSquareToPlayer(nearest) < 3000) {
         nearest->kill(); 
@@ -26,16 +27,22 @@ void Mob::action() {
     if (nearest->getX() < x && canGoLeft()) {
         x -= SPEED;
         if (x < *ecran_x) x = *ecran_x;
+        moving = true;
+        leftFacing = true;
     } else if (nearest->getX() > x && canGoRight()) {
         x += SPEED;
         if (x > *ecran_x + WIDTH - 64) x = *ecran_x + WIDTH - 64;
+        moving = true;
+        leftFacing = false;
     }
     if (nearest->getY() < y && canGoUp()) {
         y -= SPEED;
         if (y < *ecran_y) y = *ecran_y;
+        moving = true;
     } else if (nearest->getY() > y && canGoDown()) {
         y += SPEED;
         if (y > *ecran_y + HEIGHT - 64) y = *ecran_y + HEIGHT - 64;
+        moving = true;
     }
 }
 

@@ -188,7 +188,14 @@ void DungeonExplorer::frontendAffichageInGame(){
     }
     for (int i = 0; i < mobCount; i++) {
         if (mobs[i]->printable()) {
-            ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y);
+            if (mobs[i]->isMoving()) {
+                if ((compt/300) % 2 == 0)
+                    ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y, mobs[i]->isLeftFacing());
+                else
+                    ecran->plot_sprite(sprite_data_skeleton_running, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y, mobs[i]->isLeftFacing());
+            } else {
+                ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y, mobs[i]->isLeftFacing());
+            }
         }
     }
     for (int i = 0; i < wallCount; i++) {

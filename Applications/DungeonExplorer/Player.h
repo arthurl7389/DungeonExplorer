@@ -32,7 +32,7 @@ class Player {
     int* ecran_y;
     bool moving = false;
     bool vertically = false;
-    bool leftFacing = true;
+    bool leftFacing = false;
 public:
     void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**, Player*, int, Wall**, int*, int*);
     void action(bool pressed[5]);

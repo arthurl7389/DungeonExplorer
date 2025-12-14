@@ -13,6 +13,7 @@ extern unsigned char sprite_data_player1_running[SPRITE_WIDTH*SPRITE_HEIGHT];
 extern unsigned char sprite_data_player2_vertically[SPRITE_WIDTH*SPRITE_HEIGHT];
 extern unsigned char sprite_data_player2_running[SPRITE_WIDTH*SPRITE_HEIGHT];
 extern unsigned char sprite_data_skeleton[SPRITE_WIDTH*SPRITE_HEIGHT];
+extern unsigned char sprite_data_skeleton_running[SPRITE_WIDTH*SPRITE_HEIGHT];
 extern unsigned char gameover[289*40];
 extern unsigned char victoire[194*40];
 extern unsigned char accueil[596*318];
