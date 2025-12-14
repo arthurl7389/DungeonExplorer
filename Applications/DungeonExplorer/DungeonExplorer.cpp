@@ -1,6 +1,7 @@
 #include "DungeonExplorer.h"
 #include "ThreadBackground.h"
 #include "ThreadDisplay.h"
+#include <sextant/interruptions/handler/handler_tic.h>
 
 void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
     ecran=vga;
@@ -156,10 +157,34 @@ void DungeonExplorer::frontendAffichageInGame(){
     ecran->clear(1);
     update_screen_position();
     if (player1.isAlive()) {
-    	ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+    	if (player1.isMoving()) {
+    		if ((compt/300) % 2 == 0)
+    			ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+    		else {
+                if (player1.goVertically()) {
+                    ecran->plot_sprite(sprite_data_player1_vertically, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+                } else {
+        			ecran->plot_sprite(sprite_data_player1_running, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+                }
+            }
+        } else {
+    		ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y);
+    	}
     }    
     if (player2.isAlive()) {
-    	ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+        if (player2.isMoving()) {
+            if ((compt/300) % 2 == 0)
+                ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+            else {
+                if (player2.goVertically()) {
+                    ecran->plot_sprite(sprite_data_player2_vertically, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+                } else {
+                    ecran->plot_sprite(sprite_data_player2_running, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+                }
+            }
+        } else {
+            ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y);
+        }
     }
     for (int i = 0; i < mobCount; i++) {
         if (mobs[i]->printable()) {

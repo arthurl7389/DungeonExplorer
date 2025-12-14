@@ -4,7 +4,7 @@ int a = 0;
 /**
  * Permet de compter le nombre d'interruption de l'horloge.
  */
-int compt = 0;
+volatile int compt = 0;
 int secondes =0;
 
 void ticTac(int o) {

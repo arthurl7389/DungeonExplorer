@@ -30,6 +30,8 @@ class Player {
     bool alive = true;
     int* ecran_x;
     int* ecran_y;
+    bool moving = false;
+    bool vertically = false;
 public:
     void init(int, int, Clavier*, ui16_t, ui16_t, char, int, int, Mob**, Player*, int, Wall**, int*, int*);
     void action(bool pressed[5]);
@@ -43,5 +45,7 @@ public:
     void setAttack(int);
     bool isAlive() { return alive; }
     void kill() { alive = false; }
+    bool isMoving() { return moving; }
+    bool goVertically() { return vertically; }
 };
 #endif

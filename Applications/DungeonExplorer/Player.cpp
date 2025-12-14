@@ -21,21 +21,29 @@ void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId,
 }
 
 void Player::action(bool pressed[5]) {
+    moving = false;
+    vertically = false;
     if (pressed[0] && canGoUp()) {
         y -= SPEED;
         if (y < *ecran_y) y = *ecran_y;
+        moving = true;
+        vertically = true;
     }
     if (pressed[1] && canGoLeft()) {
         x -= SPEED;
         if (x < *ecran_x) x = *ecran_x;
+        moving = true;
     }
     if (pressed[2] && canGoDown()) {
         y += SPEED;
         if (y > *ecran_y + HEIGHT - 64) y = *ecran_y + HEIGHT - 64;
+        moving = true;
+        vertically = true;
     }
     if (pressed[3] && canGoRight()) {
         x += SPEED;
         if (x > *ecran_x + WIDTH - 64) x = *ecran_x + WIDTH - 64;
+        moving = true;
     }
     if (pressed[4]) {
         for (int i=0; i<mobCount; i++) {

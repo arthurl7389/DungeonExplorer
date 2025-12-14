@@ -18,6 +18,7 @@
 
 
 #include "thread.h"
+#include <sextant/interruptions/handler/handler_tic.h>
 
 #define TIMESLICE_TICKS 100 /* ~0.1s when PIT freq is 1000Hz */
 
@@ -48,6 +49,8 @@ static struct thread thread_list[MAX_THREAD];
 stack_t thread_stack[MAX_THREAD];
 
 void sched_clk(int intid) {
+	// maintain tic counter for apps that rely on ticTac()
+	ticTac(intid);
    /* Increment per-thread tick counter and preempt when quantum reached */
    if (current_thread != NULL_THREAD) {
 	   ((struct thread*)current_thread)->run_ticks++;
