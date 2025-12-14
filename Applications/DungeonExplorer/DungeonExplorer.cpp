@@ -43,7 +43,8 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 void DungeonExplorer::start() {
     while (launchGame() == 0){
         ecran->clear(1);
-        ecran->plot_sprite(accueil, 596, 318, 22, 41);
+        ecran->plot_sprite(commands, 185, 320, 228, 5);
+        ecran->plot_sprite(touches1, 217, 43, 212, 345);
         ecran->swapBuffer();
     }
     if (launchGame() == 1) {
@@ -57,10 +58,10 @@ void DungeonExplorer::start() {
 }
 
 int DungeonExplorer::launchGame(){
-    if (clavier->is_pressed(AZERTY::K_G)) {
+    if (clavier->is_pressed(AZERTY::K_G) && clavier->is_pressed(AZERTY::K_B)) {
         return 2;
     }
-    if (clavier->is_pressed(AZERTY::K_H)) {
+    if (clavier->is_pressed(AZERTY::K_G) && clavier->is_pressed(AZERTY::K_A)) {
         return 1;
     }
     return 0;
@@ -212,8 +213,10 @@ void DungeonExplorer::frontendAffichageEnd(){
     ecran->clear(1);
     if (player1.isAlive() || player2.isAlive()) {
         ecran->plot_sprite(victoire, 194, 40, 223, 180);
+        ecran->plot_sprite(touches2, 438, 78, 101, 300);
     } else {
         ecran->plot_sprite(gameover, 289, 40, 175, 180);
+        ecran->plot_sprite(touches2, 438, 78, 101, 300);
     }
     ecran->swapBuffer();
 }
