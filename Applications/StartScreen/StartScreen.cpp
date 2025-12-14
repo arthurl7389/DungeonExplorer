@@ -51,7 +51,7 @@ void start_screen(EcranBochs &vga, Clavier &c)
             break;
 
         blink = !blink;
-        sleep_ticks(30);
+        sleep_ticks(1500);
     }
 
     vga.clear(0);
