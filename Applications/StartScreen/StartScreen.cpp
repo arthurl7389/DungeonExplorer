@@ -6,7 +6,7 @@
 #include <sextant/interruptions/handler/handler_tic.h>
 
 static bool any_key_pressed(Clavier &c)
-{
+{ // simple function to check if any key is pressed
     for (int sc = 0; sc < 126; sc++) {
         if (c.is_pressed(sc))
             return true;
@@ -16,14 +16,11 @@ static bool any_key_pressed(Clavier &c)
 
 void start_screen(EcranBochs &vga, Clavier &c)
 {
-    bool blink = false;
+    bool blink = false; // blinking "PRESS ANY KEY" flag
 
     while (true)
     {
         vga.clear(0);
-
-        // bool pressed = any_key_pressed(c);
-        // draw_text(vga, pressed ? "P" : "N", 10, 10, 1, 15);
 
         // title Dungeon Explorer
         draw_text(vga, "DUNGEON", 152, 60, 3, 15);  // 640/2 - (7*16)*3/2 = 152
@@ -44,14 +41,14 @@ void start_screen(EcranBochs &vga, Clavier &c)
         vga.swapBuffer();
 
         if (any_key_pressed(c))
-            break;
+            break; // exit on any key press
 
-        if ((compt / 500) % 2 == 0)
+        if ((compt / 500) % 2 == 0) // toggle blink every 500 tics
             blink = true;
         else
             blink = false;
     }
 
-    vga.clear(0);
+    vga.clear(0); // clear screen before exiting and swapping buffer
     vga.swapBuffer();
 }

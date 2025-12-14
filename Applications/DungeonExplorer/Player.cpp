@@ -14,19 +14,19 @@ void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId,
     wallCount = wc;
     walls = wls;
     ally = p;
-    this->setAttack(6);
     alive = true;
     ecran_x = ex;
     ecran_y = ey;
 }
 
 void Player::action(bool pressed[5]) {
-    moving = false;
+    moving = false; // we reset moving status
     vertically = false;
+    // we update player position based on pressed keys if possible
     if (pressed[0] && canGoUp()) {
         y -= SPEED;
-        if (y < *ecran_y) y = *ecran_y;
-        moving = true;
+        if (y < *ecran_y) y = *ecran_y; // we don't go out of the map
+        moving = true; // we set moving status
         vertically = true;
     }
     if (pressed[1] && canGoLeft()) {
@@ -48,6 +48,7 @@ void Player::action(bool pressed[5]) {
         leftFacing = false;
     }
     if (pressed[4]) {
+        // if attack key is pressed we check for all mobs in range and attack them
         for (int i=0; i<mobCount; i++) {
             if (mobs[i]->distanceSquareToPlayer(this) < 4900) {
                 mobs[i]->attacked(attack);
@@ -56,15 +57,8 @@ void Player::action(bool pressed[5]) {
     }
 }
 
-int Player::getAttack() {
-    return attack;
-}
-
-void Player::setAttack(int a) {
-    attack = a;
-}
-
 bool Player::canGoRight() {
+    // we check for collisions with ally, mobs and walls
     if (ally->isAlive() && ally->getX() - x > 0 && ally->getX() - x < 60) {
         if ((ally->getY() - y) * (ally->getY() - y) < 3600) {
             return false;

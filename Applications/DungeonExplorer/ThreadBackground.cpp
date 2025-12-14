@@ -8,6 +8,7 @@ ThreadBackground::ThreadBackground(Semaphore *mut,DungeonExplorer* de){
 };
 
 void ThreadBackground::run(){
+	// we use ticks to manage update frequency regardless of CPU speed
 	const int TICKS_PER_SEC = 1000; // configured in main: timer.i8254_set_frequency(1000)
 	const int UPS = 27; // updates per second desired
 	const int TICKS_PER_UPDATE = TICKS_PER_SEC / UPS;
@@ -22,10 +23,10 @@ void ThreadBackground::run(){
 		accumulator += delta;
 		last = now;
 
-		while (accumulator >= TICKS_PER_UPDATE) {
-			mutex->P();
-			DE->backendCalculPosition();
-			mutex->V();
+		while (accumulator >= TICKS_PER_UPDATE) { // we update game state at fixed intervals
+			mutex->P(); // we lock the semaphore
+			DE->backendCalculPosition(); // we update players and mobs positions
+			mutex->V(); // we unlock the semaphore
 			accumulator -= TICKS_PER_UPDATE;
 		}
 

@@ -3,7 +3,7 @@
 #include <drivers/EcranBochs.h>
 #include <Applications/Draw/sprite_char.h>
 
-void draw_rect(
+void draw_rect( // draws a filled rectangle
     EcranBochs &vga,
     int x0, int y0,
     int w, int h,
@@ -14,7 +14,7 @@ void draw_rect(
             vga.paint(x, y, color);
 }
 
-void draw_sprite_scaled(
+void draw_sprite_scaled( // draws a sprite with scaling and optional mirroring
     EcranBochs &vga,
     const unsigned char *sprite,
     int sprite_w,
@@ -60,7 +60,7 @@ void draw_sprite_scaled(
 }
 
 static const unsigned char *get_char_sprite(char c)
-{
+{ // returns the sprite for a given character
     switch (c)
     {
     case 'A':
@@ -104,7 +104,7 @@ void draw_text(
     int scale,
     ui8_t color  // default color is white 15
 )
-{
+{ // draws text at given position with scaling
     int cursor_x = x;
 
     for (int i = 0; text[i] != '\0'; i++)
@@ -146,7 +146,7 @@ void draw_tile(
     int sprite_w,
     int sprite_h,
     int scale
-) {
+) { // draws a tiled area with given sprite
     int tile_w = sprite_w * scale;
     int tile_h = sprite_h * scale;
 

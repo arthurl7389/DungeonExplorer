@@ -16,7 +16,7 @@ class Player;
 class Mob {
     int x;
     int y;
-    int pv = 10;
+    int pv = 100;
     ui16_t WIDTH;
 	ui16_t HEIGHT;
 	char SPEED;
@@ -45,7 +45,6 @@ public:
     int getX() { return x; }
     int getY() { return y; }
     int getPV();
-    void setPV(int);
     bool activated();
     bool printable();
     bool wallBetween(Player*);

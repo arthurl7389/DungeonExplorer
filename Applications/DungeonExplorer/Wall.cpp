@@ -11,7 +11,7 @@ void Wall::init(int x1, int y1, int x2, int y2, ui16_t w, ui16_t h, int* ex, int
     ecran_y = ey;
 }
 
-int Wall::X1onScreen() {
+int Wall::X1onScreen() { // we return the wall's X1 coordinate on screen, taking into account screen position and boundaries
     if (getX1() - *ecran_x < 0) {
         return 0;
     }

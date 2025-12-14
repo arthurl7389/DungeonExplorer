@@ -13,20 +13,22 @@ void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2
     mobs = m;
     wallCount = wc;
     walls = wls;
-    this->setPV(100);
     ecran_x = ex;
     ecran_y = ey;
 }
 
 void Mob::action() {
-    moving = false;
+    moving = false; // reset moving status
+    // we move towards the nearest player and attack if in range
     Player* nearest = nearestPlayer();
     if (distanceSquareToPlayer(nearest) < 3000) {
         nearest->kill(); 
     }
+    // for each direction we check if we can go there (no wall or mob blocking) and move closer to the player
     if (nearest->getX() < x && canGoLeft()) {
         x -= SPEED;
-        if (x < *ecran_x) x = *ecran_x;
+        if (x < *ecran_x) x = *ecran_x; // keep inside the screen limits
+        // update moving status and facing direction
         moving = true;
         leftFacing = true;
     } else if (nearest->getX() > x && canGoRight()) {
@@ -47,6 +49,7 @@ void Mob::action() {
 }
 
 Player* Mob::nearestPlayer() {
+    // we return the nearest player (only alive players are considered)
     int dist1 = distanceSquareToPlayer(player1);
     int dist2 = distanceSquareToPlayer(player2);
     if ((dist1 < dist2 && player1->isAlive()) || !player2->isAlive()) {
@@ -57,10 +60,12 @@ Player* Mob::nearestPlayer() {
 }
 
 int Mob::distanceSquareToPlayer(Player* player) {
+    // we return the square of the distance to avoid computing a square root
     return (player->getX() - x) * (player->getX() - x) + (player->getY() - y) * (player->getY() - y);
 }
 
 bool Mob::canGoRight() {
+    // we check if there is any mob or wall blocking the way
     for (int i=0; i<mobCount; i++) {
         if (mobs[i] != this && mobs[i]->getPV() > 0 && mobs[i]->getX() - x > 0 && mobs[i]->getX() - x < 50) {
             if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2500) {
@@ -133,6 +138,7 @@ bool Mob::canGoUp() {
 }
 
 void Mob::attacked(int damage) {
+    // called when the mob is attacked to reduce its pv
     if (damage < pv) {
         pv -= damage;
     } else {
@@ -145,15 +151,13 @@ int Mob::getPV() {
     return pv;
 }
 
-void Mob::setPV(int p) {
-    pv = p;
-}
-
 bool Mob::activated() {
+    // a mob is activated if it is alive, the player it targets is alive and there is no wall between them, and it is in screen
     return pv > 0 && ((player1->isAlive() && !wallBetween(player1)) || (player2->isAlive() && !wallBetween(player2))) && getX() >= *ecran_x - WIDTH && getX() < *ecran_x + WIDTH && getY() >= *ecran_y - HEIGHT && getY() < *ecran_y + HEIGHT;
 }
 
 bool Mob::wallBetween(Player* player) {
+    // we check if there is a wall between the mob and the player by sampling points along the 2 lines between them
     bool crossed1 = false;
     bool crossed2 = false;
     for (int i=0; i<wallCount; i++) {
@@ -179,5 +183,6 @@ bool Mob::wallBetween(Player* player) {
 }
 
 bool Mob::printable() {
+    // a mob is printable if it is alive and in screen (even if not activated)
     return pv > 0 && getX() >= *ecran_x - WIDTH && getX() < *ecran_x + WIDTH && getY() >= *ecran_y - HEIGHT && getY() < *ecran_y + HEIGHT;
 }

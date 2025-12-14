@@ -1,4 +1,5 @@
 #include "sprite_char.h"
+// Sprite data for some characters (16x16 pixels each)
 
 unsigned char sprite_A[SPRITE_C_W * SPRITE_C_H] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

@@ -28,7 +28,7 @@ class DungeonExplorer {
 	const char SPEED = 1;
 	Player player1;
 	Player player2;
-	int mobCount = 14;
+	const int mobCount = 14;
 	Mob mob1;
 	Mob mob2;
 	Mob mob3;
@@ -44,7 +44,7 @@ class DungeonExplorer {
 	Mob mob13;
 	Mob mob14;
 	Mob* mobs[14] = { &mob1, &mob2, &mob3, &mob4, &mob5, &mob6, &mob7, &mob8, &mob9, &mob10, &mob11, &mob12, &mob13, &mob14 };
-	int wallCount = 12;
+	const int wallCount = 12;
 	Wall wallRight;
 	Wall wallLeft;
 	Wall wallTop;

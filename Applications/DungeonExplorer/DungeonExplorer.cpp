@@ -11,9 +11,8 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
     sem = new Semaphore(1);
     tBackground = new ThreadBackground(sem, this);
     tDisplay = new ThreadDisplay(sem, this);
-    mobCount = 14;
-    reset();
-    wallCount = 12;
+    reset(); // initialization for players and mobs
+    // walls initialization
     wallRight.init(0, 0, 20, 1000, WIDTH, HEIGHT, &ecran_x, &ecran_y);
     wallLeft.init(780, 0, 800, 1000, WIDTH, HEIGHT, &ecran_x, &ecran_y);
     wallTop.init(0, 0, 800, 20, WIDTH, HEIGHT, &ecran_x, &ecran_y);
@@ -41,13 +40,13 @@ void DungeonExplorer::init(EcranBochs* vga,Clavier* c,ui16_t w,ui16_t h) {
 }
 
 void DungeonExplorer::start() {
-    while (launchGame() == 0){
+    while (launchGame() == 0){ // wait for player to choose mode
         ecran->clear(1);
         ecran->plot_sprite(commands, 185, 320, 228, 5);
         ecran->plot_sprite(touches1, 217, 43, 212, 345);
         ecran->swapBuffer();
     }
-    if (launchGame() == 1) {
+    if (launchGame() == 1) { // one player mode (we kill player 2)
         onePlayerMode();
     }
     tBackground->start();
@@ -58,20 +57,21 @@ void DungeonExplorer::start() {
 }
 
 int DungeonExplorer::launchGame(){
-    if (clavier->is_pressed(AZERTY::K_G) && clavier->is_pressed(AZERTY::K_B)) {
+    if (clavier->is_pressed(AZERTY::K_G) && clavier->is_pressed(AZERTY::K_B)) { // two players mode
         return 2;
     }
-    if (clavier->is_pressed(AZERTY::K_G) && clavier->is_pressed(AZERTY::K_A)) {
+    if (clavier->is_pressed(AZERTY::K_G) && clavier->is_pressed(AZERTY::K_A)) { // one player mode
         return 1;
     }
-    return 0;
+    return 0; // no mode selected yet
 }
 
 void DungeonExplorer::onePlayerMode(){
-    player2.kill();
+    player2.kill(); // kill player 2 (one player mode)
 }
 
 int DungeonExplorer::mobs_alive() {
+    // we check the number of mobs still alive
     int nb_alive = 0;
     for (int i=0; i<mobCount; i++) {
         if (mobs[i]->getPV() != 0) {
@@ -82,11 +82,14 @@ int DungeonExplorer::mobs_alive() {
 }
 
 void DungeonExplorer::set_screen_position(int x, int y) {
+    // set the screen position inside the map
     ecran_x = x;
     ecran_y = y;
 }
 
 void DungeonExplorer::update_screen_position() {
+    // update the screen position based on players positions
+    // if a player is too close to the edge of the screen, we move the screen in that direction
     int delta_x = 0;
     int delta_y = 0;
     if (player1.isAlive()) {
@@ -117,15 +120,17 @@ void DungeonExplorer::update_screen_position() {
             delta_y -= SPEED;
         }
     }
-    ecran_x += 3*delta_x;
+    ecran_x += 3*delta_x; // player speed is 3
     ecran_y += 3*delta_y;
 }
 
 bool DungeonExplorer::inGame(){
+    // we are still in game if at least one player is alive and at least one mob is alive
     return (player1.isAlive() || player2.isAlive()) && mobs_alive() != 0;
 }
 
 void DungeonExplorer::backendCalculPosition(){
+    // we get the pressed keys for both players
     bool pressed1[5] = {
         clavier->is_pressed(AZERTY::K_Z),
         clavier->is_pressed(AZERTY::K_Q),
@@ -140,13 +145,14 @@ void DungeonExplorer::backendCalculPosition(){
         clavier->is_pressed(AZERTY::K_M),
         clavier->is_pressed(AZERTY::K_N)
     };
+    // we update players positions based on pressed keys if they are alive
     if (player1.isAlive()) {
         player1.action(pressed1);
     }
     if (player2.isAlive()) {
         player2.action(pressed2);
     }
-        
+    // we update mobs positions if they are activated (alive, in screen and player in range)
     for (int i = 0; i < mobCount; i++) {
         if (mobs[i]->activated()) {
             mobs[i]->action();
@@ -155,14 +161,15 @@ void DungeonExplorer::backendCalculPosition(){
 }
 
 void DungeonExplorer::frontendAffichageInGame(){
-    ecran->clear(1);
-    update_screen_position();
+    ecran->clear(1); // clear screen with black color
+    update_screen_position(); // update screen position based on players positions
+    // we draw players and mobs if alive and add animations if they are moving
     if (player1.isAlive()) {
     	if (player1.isMoving()) {
-    		if ((compt/300) % 2 == 0)
+    		if ((compt/300) % 2 == 0) // we change the sprite every 300 tics if moving
     			ecran->plot_sprite(sprite_data_player1, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y, player1.isLeftFacing());
     		else {
-                if (player1.goVertically()) {
+                if (player1.goVertically()) { // for player we have different running sprites for vertical and horizontal movement (vertical is prioritized)
                     ecran->plot_sprite(sprite_data_player1_vertically, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y, player1.isLeftFacing());
                 } else {
         			ecran->plot_sprite(sprite_data_player1_running, SPRITE_WIDTH, SPRITE_HEIGHT, player1.getX()-ecran_x, player1.getY()-ecran_y, player1.isLeftFacing());
@@ -174,7 +181,7 @@ void DungeonExplorer::frontendAffichageInGame(){
     }    
     if (player2.isAlive()) {
         if (player2.isMoving()) {
-            if ((compt/300) % 2 == 0)
+            if ((compt/300) % 2 == 0) // we change the sprite every 300 tics if moving
                 ecran->plot_sprite(sprite_data_player2, SPRITE_WIDTH, SPRITE_HEIGHT, player2.getX()-ecran_x, player2.getY()-ecran_y, player2.isLeftFacing());
             else {
                 if (player2.goVertically()) {
@@ -190,7 +197,7 @@ void DungeonExplorer::frontendAffichageInGame(){
     for (int i = 0; i < mobCount; i++) {
         if (mobs[i]->printable()) {
             if (mobs[i]->isMoving() && mobs[i]->activated()) {
-                if ((compt/300) % 2 == 0)
+                if ((compt/300) % 2 == 0) // we change the sprite every 300 tics if moving
                     ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y, mobs[i]->isLeftFacing());
                 else
                     ecran->plot_sprite(sprite_data_skeleton_running, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y, mobs[i]->isLeftFacing());
@@ -199,6 +206,7 @@ void DungeonExplorer::frontendAffichageInGame(){
             }
         }
     }
+    // we update the walls positions depending on new screen position and draw them
     for (int i = 0; i < wallCount; i++) {
         int w = walls[i]->X2onScreen() - walls[i]->X1onScreen();
         int h = walls[i]->Y2onScreen() - walls[i]->Y1onScreen();
@@ -206,10 +214,11 @@ void DungeonExplorer::frontendAffichageInGame(){
             ecran->plot_rectangle(walls[i]->X1onScreen(),walls[i]->Y1onScreen(),w,h,15);
         }
     }
-	ecran->swapBuffer();
+	ecran->swapBuffer(); // we swap the buffers to display the new frame
 }
 
 void DungeonExplorer::frontendAffichageEnd(){
+    // when the game is over we display either victory or game over screen
     ecran->clear(1);
     if (player1.isAlive() || player2.isAlive()) {
         ecran->plot_sprite(victoire, 194, 40, 223, 180);
@@ -222,8 +231,7 @@ void DungeonExplorer::frontendAffichageEnd(){
 }
 
 void DungeonExplorer::reset(){
-    // l'idée est de reset les variables du jeu pour relancer une partie, donc pas besoin de redéfinir l'écran, le clavier etc...
-    // il faut seulement remettre à zéro les mobs et les joueurs.
+    // lwe reset the game to initial positions (we just reset players and mobs, other variables are good)
     set_screen_position(0,0);
     player1.init(100, 100, clavier, WIDTH, HEIGHT, SPEED, 0, mobCount, mobs, &player2, wallCount, walls, &ecran_x, &ecran_y);
     player2.init(100, 200, clavier, WIDTH, HEIGHT, SPEED, 1, mobCount, mobs, &player1, wallCount, walls, &ecran_x, &ecran_y);

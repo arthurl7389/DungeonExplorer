@@ -42,8 +42,6 @@ public:
     bool canGoDown();
     bool canGoLeft();
     bool canGoRight();
-    int getAttack();
-    void setAttack(int);
     bool isAlive() { return alive; }
     void kill() { alive = false; }
     bool isMoving() { return moving; }
