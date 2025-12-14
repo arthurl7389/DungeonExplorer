@@ -3,6 +3,7 @@
 #include <sextant/sprite.h>
 #include <Applications/Draw/Draw.h>
 #include <Applications/Draw/sprite_tile.h>
+#include <sextant/interruptions/handler/handler_tic.h>
 
 static bool any_key_pressed(Clavier &c)
 {
@@ -11,11 +12,6 @@ static bool any_key_pressed(Clavier &c)
             return true;
     }
     return false;
-}
-
-static inline void sleep_ticks(int n)
-{
-    for (volatile int i = 0; i < n * 100000; ++i) { }
 }
 
 void start_screen(EcranBochs &vga, Clavier &c)
@@ -50,8 +46,10 @@ void start_screen(EcranBochs &vga, Clavier &c)
         if (any_key_pressed(c))
             break;
 
-        blink = !blink;
-        sleep_ticks(1500);
+        if ((compt / 500) % 2 == 0)
+            blink = true;
+        else
+            blink = false;
     }
 
     vga.clear(0);
