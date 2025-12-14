@@ -21,21 +21,31 @@ void Player::init(int x, int y,Clavier* c, ui16_t w, ui16_t h, char sp, int pId,
 }
 
 void Player::action(bool pressed[5]) {
-    if (pressed[0] && canGoDown()) {
+    moving = false;
+    vertically = false;
+    if (pressed[0] && canGoUp()) {
         y -= SPEED;
         if (y < *ecran_y) y = *ecran_y;
+        moving = true;
+        vertically = true;
     }
     if (pressed[1] && canGoLeft()) {
         x -= SPEED;
         if (x < *ecran_x) x = *ecran_x;
+        moving = true;
+        leftFacing = true;
     }
-    if (pressed[2] && canGoUp()) {
+    if (pressed[2] && canGoDown()) {
         y += SPEED;
         if (y > *ecran_y + HEIGHT - 64) y = *ecran_y + HEIGHT - 64;
+        moving = true;
+        vertically = true;
     }
     if (pressed[3] && canGoRight()) {
         x += SPEED;
         if (x > *ecran_x + WIDTH - 64) x = *ecran_x + WIDTH - 64;
+        moving = true;
+        leftFacing = false;
     }
     if (pressed[4]) {
         for (int i=0; i<mobCount; i++) {
@@ -55,21 +65,21 @@ void Player::setAttack(int a) {
 }
 
 bool Player::canGoRight() {
-    if (ally->isAlive() && ally->getX() - x > 0 && ally->getX() - x < 50) {
-        if ((ally->getY() - y) * (ally->getY() - y) < 2000) {
+    if (ally->isAlive() && ally->getX() - x > 0 && ally->getX() - x < 60) {
+        if ((ally->getY() - y) * (ally->getY() - y) < 3600) {
             return false;
         }
     }
     for (int i=0; i<mobCount; i++) {
         if (mobs[i]->getPV() > 0 && mobs[i]->getX() - x > 0 && mobs[i]->getX() - x < 50) {
-            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2000) {
+            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2700) {
                 return false;
             }
         }
     }
     for (int i=0; i<wallCount; i++) {
         if (walls[i]->getX1() - x > 0 && walls[i]->getX1() - x < 65) {
-            if (walls[i]->getY1() - 60 < y && walls[i]->getY2() > y) {
+            if (walls[i]->getY1() - 60 < y && walls[i]->getY2() > y + 1) {
                 return false;
             }
         }
@@ -78,45 +88,22 @@ bool Player::canGoRight() {
 }
 
 bool Player::canGoLeft() {
-    if (ally->isAlive() && ally->getX() - x < 0 && ally->getX() - x > -50) {
-        if ((ally->getY() - y) * (ally->getY() - y) < 2000) {
+    if (ally->isAlive() && ally->getX() - x < 0 && ally->getX() - x > -60) {
+        if ((ally->getY() - y) * (ally->getY() - y) < 3600) {
             return false;
         }
     }
     for (int i=0; i<mobCount; i++) {
         if (mobs[i]->getPV() > 0 && mobs[i]->getX() - x < 0 && mobs[i]->getX() - x > -50) {
-            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2000) {
+            if ((mobs[i]->getY() - y) * (mobs[i]->getY() - y) < 2700) {
                 return false;
             }
         }
     }
     for (int i=0; i<wallCount; i++) {
         int test = wallCount;
-        if (walls[i]->getX2() - x < 0 && walls[i]->getX2() - x > -5) {
-            if (walls[i]->getY1() - 60 < y && walls[i]->getY2() > y) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-bool Player::canGoUp() {
-    if (ally->isAlive() && ally->getY() - y > 0 && ally->getY() - y < 50) {
-        if ((ally->getX() - x) * (ally->getX() - x) < 2000) {
-            return false;
-        }
-    }
-    for (int i=0; i<mobCount; i++) {
-        if (mobs[i]->getPV() > 0 && mobs[i]->getY() - y > 0 && mobs[i]->getY() - y < 50) {
-            if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2000) {
-                return false;
-            }
-        }
-    }
-    for (int i=0; i<wallCount; i++) {
-        if (walls[i]->getY1() - y > 0 && walls[i]->getY1() - y < 65) {
-            if (walls[i]->getX1() - 60 < x && walls[i]->getX2() > x) {
+        if (walls[i]->getX2() - x < 64 && walls[i]->getX2() - x > -1) {
+            if (walls[i]->getY1() - 60 < y && walls[i]->getY2() > y + 1) {
                 return false;
             }
         }
@@ -125,21 +112,44 @@ bool Player::canGoUp() {
 }
 
 bool Player::canGoDown() {
-    if (ally->isAlive() && ally->getY() - y < 0 && ally->getY() - y > -50) {
-        if ((ally->getX() - x) * (ally->getX() - x) < 2000) {
+    if (ally->isAlive() && ally->getY() - y > 0 && ally->getY() - y < 64) {
+        if ((ally->getX() - x) * (ally->getX() - x) < 3000) {
             return false;
         }
     }
     for (int i=0; i<mobCount; i++) {
-        if (mobs[i]->getPV() > 0 && mobs[i]->getY() - y < 0 && mobs[i]->getY() - y > -50) {
+        if (mobs[i]->getPV() > 0 && mobs[i]->getY() - y > 0 && mobs[i]->getY() - y < 55) {
             if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2000) {
                 return false;
             }
         }
     }
     for (int i=0; i<wallCount; i++) {
-        if (walls[i]->getY2() - y < 0 && walls[i]->getY2() - y > -5) {
-            if (walls[i]->getX1() - 60 < x && walls[i]->getX2() > x) {
+        if (walls[i]->getY1() - y > 0 && walls[i]->getY1() - y < 66) {
+            if (walls[i]->getX1() - 60 < x && walls[i]->getX2() > x + 5) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Player::canGoUp() {
+    if (ally->isAlive() && ally->getY() - y < 0 && ally->getY() - y > -50) {
+        if ((ally->getX() - x) * (ally->getX() - x) < 3000) {
+            return false;
+        }
+    }
+    for (int i=0; i<mobCount; i++) {
+        if (mobs[i]->getPV() > 0 && mobs[i]->getY() - y < 0 && mobs[i]->getY() - y > -55) {
+            if ((mobs[i]->getX() - x) * (mobs[i]->getX() - x) < 2000) {
+                return false;
+            }
+        }
+    }
+    for (int i=0; i<wallCount; i++) {
+        if (walls[i]->getY2() - y < 5 && walls[i]->getY2() - y > -5) {
+            if (walls[i]->getX1() - 60 < x && walls[i]->getX2() > x + 5) {
                 return false;
             }
         }

@@ -13,9 +13,17 @@ void ThreadDisplay::run(){
 		if (DE->inGame()){
 			DE->frontendAffichageInGame();
 			mutex->V();
+			thread_yield();
 		} else {
 			DE->frontendAffichageEnd();
+			if (DE->launchGame() != 0){
+				DE->reset();
+				if (DE->launchGame() == 1) {
+				    DE->onePlayerMode();
+				}
+			}
 			mutex->V();
+			thread_yield();
 		}
 
 	}

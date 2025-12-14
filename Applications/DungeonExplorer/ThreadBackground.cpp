@@ -1,5 +1,6 @@
 #include "ThreadBackground.h"
 #include "DungeonExplorer.h"
+#include <sextant/interruptions/handler/handler_tic.h>
 
 ThreadBackground::ThreadBackground(Semaphore *mut,DungeonExplorer* de){
 	mutex = mut;
@@ -7,13 +8,28 @@ ThreadBackground::ThreadBackground(Semaphore *mut,DungeonExplorer* de){
 };
 
 void ThreadBackground::run(){
-	while (true){
-		mutex->P();
+	const int TICKS_PER_SEC = 1000; // configured in main: timer.i8254_set_frequency(1000)
+	const int UPS = 27; // updates per second desired
+	const int TICKS_PER_UPDATE = TICKS_PER_SEC / UPS;
 
-		DE->backendCalculPosition();
+	int last = compt;
+	int accumulator = 0;
 
-		mutex->V();
-		//thread_yield(); // on passe la main à un autre thread, pas obliger mais ça fait pas de mal
+	while (true) {
+		int now = compt;
+		int delta = now - last;
+		if (delta < 0) delta = 0;
+		accumulator += delta;
+		last = now;
+
+		while (accumulator >= TICKS_PER_UPDATE) {
+			mutex->P();
+			DE->backendCalculPosition();
+			mutex->V();
+			accumulator -= TICKS_PER_UPDATE;
+		}
+
+		thread_yield();
 	}
 };
 

@@ -18,6 +18,9 @@
 
 
 #include "thread.h"
+#include <sextant/interruptions/handler/handler_tic.h>
+
+#define TIMESLICE_TICKS 100 /* ~0.1s when PIT freq is 1000Hz */
 
 
 /**
@@ -46,7 +49,16 @@ static struct thread thread_list[MAX_THREAD];
 stack_t thread_stack[MAX_THREAD];
 
 void sched_clk(int intid) {
-   thread_yield();
+	// maintain tic counter for apps that rely on ticTac()
+	ticTac(intid);
+   /* Increment per-thread tick counter and preempt when quantum reached */
+   if (current_thread != NULL_THREAD) {
+	   ((struct thread*)current_thread)->run_ticks++;
+	   if (((struct thread*)current_thread)->run_ticks >= TIMESLICE_TICKS) {
+		   ((struct thread*)current_thread)->run_ticks = 0;
+		   thread_yield();
+	   }
+   }
 }
 
 struct thread *thread_get_current(){
@@ -57,6 +69,8 @@ struct thread *thread_get_current(){
 inline static sextant_ret_t set_current(struct thread *thr){
 	current_thread = thr;
 	current_thread->state = THR_RUNNING;
+	/* reset runtime tick counter when a thread is scheduled */
+	current_thread->run_ticks = 0;
 	return SEXTANT_OK;
 }
 
@@ -78,6 +92,7 @@ sextant_ret_t thread_subsystem_setup(vaddr_t init_thread_stack_base_addr,size_t 
 		return -1;
 	/* Initialize the thread attributes */
 	myself->state = THR_CREATED;
+	myself->run_ticks = 0;
 	myself->kernel_stack_base_addr = init_thread_stack_base_addr;
 	myself->kernel_stack_size = init_thread_stack_size;
 	/* Ok, now pretend that the running thread is ourselves */
@@ -106,6 +121,7 @@ struct thread * create_kernel_thread(kernel_thread_start_routine_t start_func,vo
 	/* Initialize the thread attributes */
 	new_thread->state = THR_CREATED;
 	new_thread->pid = i;
+	new_thread->run_ticks = 0;
 	/* Allocate the stack for the new thread */
 	temp = thread_stack[i].stack;
 	new_thread->kernel_stack_base_addr = (vaddr_t) temp;

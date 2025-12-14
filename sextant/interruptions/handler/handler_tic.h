@@ -15,4 +15,7 @@
  */
 void ticTac(int);
 
+// Compteur global de tics (mis à jour dans l'IRQ)
+extern volatile int compt;
+
 #endif
