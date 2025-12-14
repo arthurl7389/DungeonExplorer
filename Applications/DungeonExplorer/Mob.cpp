@@ -15,6 +15,9 @@ void Mob::init(int x, int y, ui16_t w, ui16_t h, char sp, Player* p1, Player* p2
     walls = wls;
     ecran_x = ex;
     ecran_y = ey;
+    pv = 100;
+    moving = false;
+    leftFacing = false;
 }
 
 void Mob::action() {

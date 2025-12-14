@@ -155,7 +155,7 @@ void DungeonExplorer::backendCalculPosition(){
     // we update mobs positions if they are activated (alive, in screen and player in range)
     for (int i = 0; i < mobCount; i++) {
         if (mobs[i]->activated()) {
-            mobs[i]->action();
+           mobs[i]->action();
         }
     }
 }
