@@ -188,7 +188,7 @@ void DungeonExplorer::frontendAffichageInGame(){
     }
     for (int i = 0; i < mobCount; i++) {
         if (mobs[i]->printable()) {
-            if (mobs[i]->isMoving()) {
+            if (mobs[i]->isMoving() && mobs[i]->activated()) {
                 if ((compt/300) % 2 == 0)
                     ecran->plot_sprite(sprite_data_skeleton, SPRITE_WIDTH, SPRITE_HEIGHT, mobs[i]->getX()-ecran_x, mobs[i]->getY()-ecran_y, mobs[i]->isLeftFacing());
                 else
