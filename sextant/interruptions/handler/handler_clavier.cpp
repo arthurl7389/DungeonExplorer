@@ -14,7 +14,7 @@ int posBuf=0;
 char buf[256];
 bool modifBuf=false;
 
-bool key_pressed[126];
+bool key_pressed[126] = { false };;
 
 int writechar(int sc) {
 	int ch = 0;

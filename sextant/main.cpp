@@ -26,6 +26,8 @@
 
 #include <sextant/sprite.h>
 
+#include <Applications/StartScreen/StartScreen.h>
+
 #include <Applications/DungeonExplorer/DungeonExplorer.h>
 #include <sextant/Synchronisation/Semaphore/Semaphore.h>
 
@@ -200,6 +202,9 @@ extern "C" void Sextant_main(unsigned long magic, unsigned long addr){
     // only usefull in 4 or 8 bits modes
     vga.set_palette(palette_vga);
     vga.plot_palette(0, 0, 25);
+
+	// Show start screen
+	start_screen(vga, clavier);
 
 	//on met l'écran boch dans le main parce qu'on veut qu'un écran et on fait tout avec.
 	game.init(&vga,&clavier,WIDTH,HEIGHT);
